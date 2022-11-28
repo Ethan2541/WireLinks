@@ -55,7 +55,7 @@ liste de filtres:\n\
 						print("La voulez vous dans un fichier pdf ou texte ?(P/T) ", end="")
 						pt = input()
 						if(pt.upper() == "P" or pt.upper() == "PDF"):
-							enregistrer_pdf(file_name, filtre)
+							create_pdf(file_name, filtre)
 							entree_non_correcte = False
 						elif(pt.upper() == "T" or pt.upper() == "TEXTE"):
 							enregistrer_texte(file_name, filtre)
@@ -82,15 +82,15 @@ liste de filtres:\n\
 				print("Voulez vous enregistrer l'analyse des trames ?(O/N) ", end="")
 				yn = input()
 				if(yn.upper() == "O" or yn.upper() == "OUI"):
-					print("Comment voulez vous nommer le fichier ? ", end="")
-					file_name = input()
 					print("La voulez vous dans un fichier pdf ou texte ?(P/T) ", end="")
 					pt = input()
 					if(pt.upper() == "P" or pt.upper() == "PDF"):
-						enregistrer_pdf(file_name, TrameList.get_liste())
+						print("Comment voulez vous nommer le fichier ? ", end="")
+						create_pdf(f"{input()}.pdf", TrameList.get_liste())
 						entree_non_correcte = False
 					elif(pt.upper() == "T" or pt.upper() == "TEXTE"):
-						enregistrer_texte(file_name, TrameList.get_liste())
+						print("Comment voulez vous nommer le fichier ? ", end="")
+						enregistrer_texte(f"{input()}.txt", TrameList.get_liste())
 						entree_non_correcte = False
 					else:
 						print("Malheureusement votre entrée est incorecte")
