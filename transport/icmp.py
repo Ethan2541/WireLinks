@@ -1,8 +1,3 @@
-import sys
-
-sys.path.append("/Users/paulmekhail/fac/L3/info/LU3IN033/projet/WireLinks/reseau")
-sys.path.append("/Users/paulmekhail/fac/L3/info/LU3IN033/projet/WireLinks/transport")
-
 from ip import *
 from tcp import *
 from udp import *
