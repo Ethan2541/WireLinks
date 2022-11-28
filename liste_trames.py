@@ -147,12 +147,15 @@ class TrameList:
 					i += 1
 
 			while i < taille_str:
-				if(i == taille_str-1 or str_filtre[i+1:i+3] == "&&" or str_filtre[i+1:i+3] == "||"):
-					fin_attribut = i
-					attribut = str_filtre[debut_attribut:fin_attribut+1]
+				if(i == taille_str-1 or str_filtre[i:i+2] == "&&" or str_filtre[i:i+2] == "||"):
 					if(i != taille_str-1):
-						concat = str_filtre[i+1:i+3]
+						attribut = str_filtre[debut_attribut:i]
+						concat = str_filtre[i:i+2]
+					else:
+						attribut = str_filtre[debut_attribut:i+1]
+						concat = "fin"
 					debut_filtre = i+4
+					print(concat)
 					break
 			
 				i += 1
@@ -162,69 +165,24 @@ class TrameList:
 
 			elif(filtre.lower() == "ip.src"):
 				liste_filtre_tmp = TrameList.filtre_ip_src(attribut)
-				
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-				
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-					
-				i += 3
+				print(attribut)
+				print("je suis l'ip.src")
+				print(len(liste_filtre_tmp))
 
 			elif(filtre.lower() == "ip.dst"):
 				liste_filtre_tmp = TrameList.filtre_ip_dst(attribut)
-				
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-				
-				i += 3
 
 			elif(filtre.lower() == "port.src"):
 				liste_filtre_tmp = TrameList.filtre_port_src(attribut)
-				
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-				
-				i += 3
 
 			elif(filtre.lower() == "port.dst"):
 				liste_filtre_tmp = TrameList.filtre_port_dst(attribut)
 
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-
-				i += 3
-
 			elif(filtre.lower() == "mac.src"):
 				liste_filtre_tmp = TrameList.filtre_mac_src(attribut)
 
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-
-				i += 3
-
 			elif(filtre.lower() == "mac.dst"):
 				liste_filtre_tmp = TrameList.filtre_mac_dst(attribut)
-				
-				if(operat == "=="):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-
-				elif(operat == "<>" or operat == "!="):
-					liste_filtre = TrameList.exclu(liste_filtre, liste_filtre_tmp)
-
-				i += 3
 
 			elif(filtre.lower() == "proto"):
 
@@ -247,36 +205,40 @@ class TrameList:
 					elif(attribut[2:] in proto_transport_code):
 						liste_filtre_tmp = TrameList.filtre_protcole_transport_code(attribut)
 
+					elif(attribut.upper() in proto_application):
+						liste_filtre_tmp = TrameList.filtre_protcole_application(attribut)
+
 					else:
 						print("Ce protocole n'est malheureusement pas supporté: ", attribut)
+						i += 3
+						continue
 
-				elif(attribut.upper() in proto_application):
-					liste_filtre_tmp = TrameList.filtre_protcole_application(attribut)
+			else:
+				print("Filtre non reconnu. Regardez le filtres disponibles dans la doc")
+				return []
 
+			if(operat == "=="):
+				if(concat == "&&"):
+					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
+				elif(concat == "||"):
+					liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
+				elif(concat == "fin"):
+					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
 				else:
-					print("Ce protocole n'est malheureusement pas supporté: ", attribut)
-					i += 3
-					continue
+					print("erreur d'opération")
+				i += 3
 
-				if(operat == "=="):
-					print("la")
-					if(concat == "&&"):
-						liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-					elif(concat == "||"):
-						liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
-					else:
-						print("erreur d'opération")
-					i += 3
-
-				elif(operat == "<>" or operat == "!="):
-					if(concat == "&&"):
-						liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
-					elif(concat == "||"):
-						liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
-					else:
-						print("erreur d'opération")
-					i += 3
-
+			elif(operat == "<>" or operat == "!="):
+				if(concat == "&&"):
+					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
+				elif(concat == "||"):
+					liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
+				elif(concat == "fin"):
+					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
+				else:
+					print("erreur d'opération")
+				i += 3
+			
 			else:
 				print("Filtre non reconnu. Regardez le filtres disponibles dans la doc")
 				return []
@@ -304,6 +266,10 @@ class TrameList:
 			for i in TrameList.get_liste():
 				return i.afficher_info_imp_gui())"""
 
+
+	def get_trame(iden):
+		if(iden <= len(TrameList.get_liste())):
+			return TrameList.get_liste()[iden-1]
 
 	def printT(iden):
 		if(iden <= len(TrameList.get_liste())):

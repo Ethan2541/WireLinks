@@ -150,17 +150,24 @@ class Trame:
 			print(chaine)
 
 		else:
-			print("Trame numéro ",self.get_iden(), "non lisable")
+			print("Trame numéro ",self.iden, "non lisible")
 
 	def afficher_info_imp_gui(self):
-		if(self.ip != None and self.ethernet.get_type_eth2() == "IPV4"):
-			return "  #{0:04d}     {1:<17}     {2:<17}     {3:<15}     {4:<15}     {5:<8}     {6:<8}    {7:<9}".format(self.iden, self.get_ethernet().get_src(), self.get_ethernet().get_dst(), self.get_ip().get_src(), self.get_ip().get_dst(), self.get_transport().get_port_src(), self.get_transport().get_port_dst(), self.get_ip().get_proto2())
-		
-		elif(self.ip != None and self.ethernet.get_type_eth2() == "ARP"):
-			return "  #{0:04d}     {1:<17}     {2:<17}     {3:<15}     {4:<15}     {5:<9}".format(self.iden, self.get_ethernet().get_src(), self.get_ethernet().get_dst(), self.get_ip().get_ip_src(), self.get_ip().get_ip_dst(), "ARP")
+		chaine = ""
+		if(self.ethernet != None):
+			chaine += "  #{0:04d}     {1:<20}     {2:<20}".format(self.iden, self.ethernet.get_src(), self.ethernet.get_dst())
+			if(self.ip != None and self.ethernet.get_type_eth2() == "IPV4"):
+				chaine += "     {0:<18}     {1:<18}".format(self.ip.get_src(), self.ip.get_dst())
+				if(self.transport != None and self.ip.get_proto2() == "TCP" or self.ip.get_proto2() == "UDP"):
+					chaine += "     {0:<9}     {1:<8}    {2:<9}".format(self.transport.get_port_src(), self.transport.get_port_dst(), self.ip.get_proto2())
+				else:
+					chaine += "            {0:<9}".format(self.ip.get_proto2())
 
+			elif(self.ip != None and self.ethernet.get_type_eth2() == "ARP" or self.ethernet.get_type_eth2() == "RARP"):
+				chaine += "     {0:<18}     {1:<18}           {2:<18}".format(self.ip.get_ip_src(), self.ip.get_ip_dst(), self.ethernet.get_type_eth2())
+			return chaine
 		else:
-			return f"Trame numéro {self.get_iden()} non lisable"
+			return f"Trame numéro {self.iden} non lisible"
 
 	def __str__(self):
 		chaine =  f"Trame numéro {self.iden} (taille: {int(self.taille)}octets)\
