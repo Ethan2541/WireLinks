@@ -97,7 +97,7 @@ liste de filtres:\n\
 				elif(yn.upper() == "N" or yn.upper() == "NON"):
 					entree_non_correcte = False
 				else:
-					print("Malheureusement votre entrée est incorecte")
+					print("Malheureusement votre entrée est incorrecte")
 
 			print("copyright Ethan et Paul le magicien")
 			break

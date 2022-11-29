@@ -4,19 +4,20 @@ class Ethernet:
 		self.src = f"{trame[12:14]}:{trame[14:16]}:{trame[16:18]}:{trame[18:20]}:{trame[20:22]}:{trame[22:24]}"
 		self.type_eth = trame[24:28]
 		self.data = trame[28:]
-		if(self.type_eth == "0800"):
-			self.type_eth2 = "IPV4"
-		elif(self.type_eth == "86DD"):
-			self.type_eth2 = "IPV6"
-		elif(self.type_eth == "0806"):
+
+		if (self.type_eth == "0800"):
+			self.type_eth2 = "IPv4"
+		elif (self.type_eth == "86DD"):
+			self.type_eth2 = "IPv6"
+		elif (self.type_eth == "0806"):
 			self.type_eth2 = "ARP"
-		elif(self.type_eth == "8035"):
+		elif (self.type_eth == "8035"):
 			self.type_eth2 = "RARP"
 		else:
-			self.type_eth2 = "indéterminé"
+			self.type_eth2 = "Unknown"
 		
 		
-
+	# Getters
 	def get_dst(self):
 		return self.dst
 
@@ -32,8 +33,10 @@ class Ethernet:
 	def get_data(self):
 		return self.data
 
+
+	# String
 	def __str__(self):
 		return f"Ethernet:\
-		\n\tAdresse destination: {self.dst}\
-		\n\tAdresse source: {self.src}\
-		\n\tType de protocole: {self.type_eth2} (0x{self.type_eth})"
+		\n\tDestination Address: {self.dst}\
+		\n\tSource Address: {self.src}\
+		\n\tType: {self.type_eth2} (0x{self.type_eth})"

@@ -1,6 +1,6 @@
 from trame import *
 
-proto_reseaux = ["IPV4", "IPV6", "ARP"]
+proto_reseaux = ["IPv4", "IPv6", "ARP"]
 proto_reseaux_code = ["080", "86DD", "0806"]
 proto_transport = ["ICMP", "TCP", "UDP", "IGMP", "EGP", "IGP", "XTP", "RSVP"]
 proto_transport_code = ["06", "01","02", "08", "09", "11", "24", "2D"]
@@ -12,13 +12,16 @@ class TrameList:
 	def __init__(self, trame):
 		self.liste_trames.append(trame)
 
+	def set_liste(new_list):
+		TrameList.liste_trames = new_list
+
 	def get_liste():
 		return TrameList.liste_trames
 
 	def filtre_ip_src(ip):
 		liste_filtre = []
 		for i in TrameList.liste_trames:
-			if(i.get_ethernet().get_type_eth2() == "IPV4"):
+			if(i.get_ethernet().get_type_eth2() == "IPv4"):
 				if(i.get_ip().get_src() == ip):
 					liste_filtre.append(i)
 			elif(i.get_ethernet().get_type_eth2() == "ARP"):
@@ -29,7 +32,7 @@ class TrameList:
 	def filtre_ip_dst(ip):
 		liste_filtre = []
 		for i in TrameList.liste_trames:
-			if(i.get_ethernet().get_type_eth2() == "IPV4"):
+			if(i.get_ethernet().get_type_eth2() == "IPv4"):
 				if(i.get_ip().get_dst() == ip):
 					liste_filtre.append(i)
 			elif(i.get_ethernet().get_type_eth2() == "ARP"):
@@ -41,7 +44,7 @@ class TrameList:
 		liste_filtre = []
 		for i in TrameList.liste_trames:
 			try:
-				if(i.get_ethernet().get_type_eth2() == "IPV4"):
+				if(i.get_ethernet().get_type_eth2() == "IPv4"):
 					if(i.get_ip().get_proto2() == "TCP" or i.get_ip().get_proto2() == "UDP"):
 						if(int(i.get_transport().get_port_src(), 16) == int(port)):
 							liste_filtre.append(i)
@@ -53,7 +56,7 @@ class TrameList:
 		liste_filtre = []
 		for i in TrameList.liste_trames:
 			try:
-				if(i.get_ethernet().get_type_eth2() == "IPV4"):
+				if(i.get_ethernet().get_type_eth2() == "IPv4"):
 					if(i.get_ip().get_proto2() == "TCP" or i.get_ip().get_proto2() == "UDP"):
 						if(int(i.get_transport().get_port_dst(), 16) == int(port)):
 							liste_filtre.append(i)

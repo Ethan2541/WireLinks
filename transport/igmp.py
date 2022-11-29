@@ -8,6 +8,8 @@ class Igmp:
 		self.class_ip = f"{int(trame[8:10], 16)}.{int(trame[10:12], 16)}.{int(trame[12:14], 16)}.{int(trame[14:16], 16)}"
 		self.data = trame[16:]
 
+
+	# Getters
 	def get_typ(self):
 		return self.typ
 
@@ -29,9 +31,11 @@ class Igmp:
 	def get_data(self):
 		return self.data
 
+
+	# String
 	def __str__(self):
 		return f"{self.typ}:\
 		\n\tIGMP Version: {self.version}\
 		\n\tIGMP Type: {self.type_igmp}\
 		\n\tChecksum: 0x{self.chk}\
-		\n\tClass D Ip address: {self.chk}"
+		\n\tGroup Address: {self.class_ip}"
