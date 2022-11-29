@@ -1,3 +1,5 @@
-def erreur_type(couche, typ, n):
-	print(f"\033[0;31m Malheuresment le protocole de {couche} {typ} utilisé dans\
- la trame numéro {n} n'est pas pris en charge par notre logiciel\n \033[00m")
+from tkinter import messagebox as mb
+
+def type_error(layer, typ, n):
+	mb.showwarning("Warning", f"Unfortunately, WireLinks cannot analyze the {layer}-layer protocol: {typ} used\
+ in the frame #{n:04}")

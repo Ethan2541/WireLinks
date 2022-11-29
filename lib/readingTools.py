@@ -1,3 +1,5 @@
+from tkinter import messagebox as mb
+
 def is_not_valid_extension(filename: str) -> bool:
     """str -> bool
     returns True if the file extension is supported
@@ -15,7 +17,7 @@ def read_trace_lines(filename: str) -> list[str]:
     """
 
     if is_not_valid_extension(filename):
-        print("Invalid file extension")
+        mb.showerror("Error", "Invalid file extension")
         return []
 
     try:
@@ -23,7 +25,7 @@ def read_trace_lines(filename: str) -> list[str]:
             return trace.readlines()
 
     except (FileNotFoundError, PermissionError, OSError):
-        print("Error opening file")
+        mb.showerror("Error", "Error opening file")
         return []
 
 

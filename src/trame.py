@@ -92,7 +92,7 @@ class Trame:
 					
 				else:
 					
-					erreur_type("Transport", self.ip.get_proto2(), self.iden)
+					type_error("Transport", self.ip.get_proto2(), self.iden)
 					self.transport = None
 					self.http = None
 					self.data = None
@@ -114,7 +114,7 @@ class Trame:
 			self.data = None
 
 		else:
-			erreur_type("Network", self.ethernet.get_type_eth2(), self.iden)
+			type_error("Network", self.ethernet.get_type_eth2(), self.iden)
 			self.ip = None
 			self.transport = None
 			self.http = None
@@ -146,6 +146,7 @@ class Trame:
 	def get_data(self):
 		return self.data
 
+	"""
 	def afficher_info_imp(self):
 		if (self.ip != None and self.ethernet.get_type_eth2() == "IPv4"):
 			chaine = f"{self.get_iden()} ({int(self.get_taille())}octets): {self.get_ip().get_src()}\
@@ -169,6 +170,7 @@ class Trame:
 
 		else:
 			print("Frame #",self.iden, "Unreadable")
+	"""
 
 	def afficher_info_imp_gui(self):
 		chaine = ""
@@ -177,7 +179,7 @@ class Trame:
 			if(self.ip != None and self.ethernet.get_type_eth2() == "IPv4"):
 				chaine += "     {0:<18}      {1:<18}".format(self.ip.get_src(), self.ip.get_dst())
 				if(self.transport != None and self.ip.get_proto2() == "TCP" or self.ip.get_proto2() == "UDP"):
-					chaine += "     {0:<10}     {1:<8}     {2:<8}".format(self.ip.get_proto2(), self.transport.get_port_src(), self.transport.get_port_dst())
+					chaine += "     {0:<10}     {1:<8}     {2:<8}".format(self.ip.get_proto2(), int(self.transport.get_port_src(), 16), int(self.transport.get_port_dst(), 16))
 				else:
 					chaine += "     {0:<10}".format(self.ip.get_proto2())
 
