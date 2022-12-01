@@ -139,7 +139,6 @@ class Trame:
 	def get_data(self):
 		return self.data
 
-	"""
 	def afficher_info_imp(self):
 		if (self.ip != None and self.ethernet.get_type_eth2() == "IPv4"):
 			chaine = f"{self.get_iden()} ({int(self.get_taille())}octets): {self.get_ip().get_src()}\
@@ -163,7 +162,6 @@ class Trame:
 
 		else:
 			print("Frame #",self.iden, "Unreadable")
-	"""
 
 	def afficher_info_imp_gui(self):
 		chaine = ""
@@ -182,6 +180,58 @@ class Trame:
 
 		else:
 			return f"Frame #{self.iden:04} Unreadable"
+
+	def flow_graph(self):
+		if(self.ip != None and self.ip.typ=="IPV4"):
+			chaine = f"#{self.iden}  {self.ip.get_src()}-------"
+			
+			if(self.http != None):
+				chaine += self.transport.get_port_src()
+				chaine += " |"
+				chaine += self.http.get_http[:12]
+				chaine += "| "
+				chaine += self.transport.get_port_dst()
+			
+			if(self.transport.get_typ()=="TCP"):
+				chaine += self.transport.get_port_src()
+				chaine += " |"
+				chaine += f"{self.transport.get_port_src()} --> {self.transport.get_port_dst()} ["
+				if(self.transport.get_syn() == 1):
+					chaine += "SYN"
+				elif(self.transport.get_ack() == 1):
+					chaine += "ACK"
+				elif(self.transport.get_fin() == 1):
+					chaine += "FIN"
+				elif(self.transport.get_psh() == 1):
+					chaine += "PSH"
+				chaine += "] "
+				chaine += f"Seq={self.transport.get_seq_num} Ack={self.transport.get_ack_num}| "
+				chaine += self.transport.get_port_dst()
+			elif(self.transport.get_typ()=="UDP"):
+				chaine += self.transport.get_port_src()
+				chaine += " |"
+				chaine += f"{self.transport.get_port_src()} --> {self.transport.get_port_dst()} "
+				chaine += f"length={self.transport.get_length()}"
+				chaine += self.transport.get_port_dst()
+			elif(self.transport.get_typ()=="ICMP"):
+				chaine += self.transport.get_port_src()
+				chaine += " |"
+				chaine += f"{self.transport.get_port_src()} --> {self.transport.get_port_dst()} "
+				chaine += f"Type={self.transport.get_typ_icmp2()} Id={self.transport.get_id()}"
+				chaine += self.transport.get_port_dst()
+			
+			chaine += f"------->{self.ip.get_dst()}"
+			chaine += "Commentaires: "
+
+
+				
+
+		elif(self.ip != None and self.ip.get_typ() == "ARP"):
+			chaine += f"#{self.iden}  {self.ip.get_ip_src()}-------"
+			chaine += " |"
+			chaine += f"ARP type={self.ip.get_op2()}| "
+			chaine += f"------->{self.ip.get_ip_dst()}"
+
 
 
 	# String
