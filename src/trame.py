@@ -195,7 +195,7 @@ class Trame:
 			if(self.transport.get_typ()=="TCP"):
 				chaine += self.transport.get_port_src()
 				chaine += " |"
-				chaine += f"{self.transport.get_port_src()} --> {self.transport.get_port_dst()} ["
+				chaine += f"{self.transport.get_port_src()} --> {self.transport.get_port_dst()} length={self.transport.get_thl()*4} ["
 				if(self.transport.get_syn() == 1):
 					chaine += "SYN"
 				elif(self.transport.get_ack() == 1):
@@ -204,6 +204,10 @@ class Trame:
 					chaine += "FIN"
 				elif(self.transport.get_psh() == 1):
 					chaine += "PSH"
+				elif(self.transport.get_urg() == 1):
+					chaine += "URG"
+				elif(self.transport.get_rst() == 1):
+					chaine += "RST"
 				chaine += "] "
 				chaine += f"Seq={self.transport.get_seq_num} Ack={self.transport.get_ack_num}| "
 				chaine += self.transport.get_port_dst()
@@ -221,10 +225,6 @@ class Trame:
 				chaine += self.transport.get_port_dst()
 			
 			chaine += f"------->{self.ip.get_dst()}"
-			chaine += "Commentaires: "
-
-
-				
 
 		elif(self.ip != None and self.ip.get_typ() == "ARP"):
 			chaine += f"#{self.iden}  {self.ip.get_ip_src()}-------"
@@ -232,6 +232,19 @@ class Trame:
 			chaine += f"ARP type={self.ip.get_op2()}| "
 			chaine += f"------->{self.ip.get_ip_dst()}"
 
+		return chaine
+
+	def comm_flow(self):
+		comm = ""
+		
+		if(self.ip != None and self.ip.get_typ() == "IPV4"):
+			print()
+
+		elif(self.ip != None and self.ip.get_typ() == "ARP"):
+			if (self.ip.get_op() == "0001"):
+				comm += f"ARP who has {self.ip.get_ip_dst()} tell {self.ip.get_eth_src()}"
+			elif (self.ip.get_op() == "0002"):
+				comm += f"ARP {self.ip.get_ip_src()} is at {self.ip.get_eth_src()}"
 
 
 	# String
