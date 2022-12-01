@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 class Ethernet:
 	def __init__(self, trame):
 		self.dst = f"{trame[:2]}:{trame[2:4]}:{trame[4:6]}:{trame[6:8]}:{trame[8:10]}:{trame[10:12]}"

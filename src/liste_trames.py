@@ -258,7 +258,7 @@ class TrameList:
 				return []
 
 		return liste_filtre
-	"""
+	
 	def afficher():
 		if(len(TrameList.get_liste()) == 0):
 			print("Trace vide")
@@ -278,15 +278,15 @@ class TrameList:
 			print("Trace vide")
 		else:
 			for i in TrameList.get_liste():
-				return i.afficher_info_imp_gui())"""
+				return i.afficher_info_imp_gui()
 
 
 	def get_trame(iden):
 		if(iden <= len(TrameList.get_liste())):
 			return TrameList.get_liste()[iden-1]
 
-	"""def printT(iden):
+	def printT(iden):
 		if(iden <= len(TrameList.get_liste())):
 			print(TrameList.get_liste()[iden-1])
 		else:
-			print("Identifiant non existant")"""
+			print("Identifiant non existant")

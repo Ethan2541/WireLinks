@@ -1,20 +1,13 @@
 import sys
 from exceptions import *
 
-sys.path.append("../link")
 from ethernet import *
-
-sys.path.append("../network")
 from ip import *
 from arp import *
-
-sys.path.append("../transport")
 from tcp import *
 from udp import *
 from icmp import *
 from igmp import *
-
-sys.path.append("../application")
 from httpm import *
 
 class Trame:

@@ -1,9 +1,6 @@
-import sys
 from fpdf import FPDF
-
-sys.path.append("../src")
-from liste_trames import *
 from trame import *
+from liste_trames import *
 
 class PDF(FPDF):
 	def header(self):
