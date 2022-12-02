@@ -49,9 +49,9 @@ text_font = tkFont.Font(family = "Roboto", size = 12)
 button_font = tkFont.Font(family = "Roboto Medium", size = 12)
 entry_font = tkFont.Font(family = "Roboto", size = 12, slant = "italic")
 
-menu_color = "#2e3b43"
-bg_color = "#26313c"
-frame_color = "#1d2730"
+menu_color = "#292927"
+bg_color = "#5b524b"
+frame_color = "#292927"
 entry_color = "#ffffff"
 hover_menu_color = "#5b524b"
 hover_listbox_color = "#5b524b"
@@ -69,7 +69,7 @@ menu = tk.Frame(root, bg = menu_color)
 menu.grid(column = 0, row = 0, sticky = tk.NS)
 
 right_frame = tk.Frame(root)
-right_frame.grid(column = 1, row = 0, sticky = "new")
+right_frame.grid(padx = 125, pady = 20, column = 1, row = 0, sticky = "new")
 right_frame.columnconfigure(0, weight = 1)
 right_frame.rowconfigure(0, weight = 1)
 right_frame.rowconfigure(1, weight = 10000)
@@ -91,11 +91,12 @@ def file_dialog_command():
 			TrameList(Trame(i+1, trames[i]))
 	
 		if (len(TrameList.get_liste()) == 0):
-			mb.showinfo("Info", "Trace vide")
+			mb.showinfo("Info", "Empty File or No Valid Frame was Found")
 
 		else:
 			for i in TrameList.get_liste():
-				add_frame(i.afficher_info_imp_gui())
+				print(i.flow_graph())
+				add_frame(i.flow_graph())
 
 folder_icon = tk.PhotoImage(file = os.path.join(dirname, "../icons/folder-open.png"))
 file_dialog = tkmacosx.Button(menu, bg = menu_color, fg = text_color, bd = 5, height = 80, width = 80, relief = tk.FLAT, 
@@ -181,23 +182,23 @@ filterbar.bind("<Return>", handle_filters)
 # Content
 content = tk.Frame(right_frame, bg = bg_color)
 content.grid(row = 1, sticky = tk.EW)
-content_title = tk.Label(content, bg = bg_color, font = title_font, fg = text_color, text = "FRAMES ANALYSIS")
-content_title.pack(pady = (50, 25))
+#content_title = tk.Label(content, bg = bg_color, font = title_font, fg = text_color, text = "FRAMES ANALYSIS")
+#content_title.pack(pady = (50, 25))
 
 
 # List of Frames
 
 # Wrapper and Listbox
-frames_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "List of Frames")
-frames_subtitle.pack(padx = 125, anchor = "w")
+#frames_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "List of Frames")
+#frames_subtitle.pack(anchor = "w")
 
 printable_frames_list = ["  #{0:04d}     {1:<20}     {2:<20}     {3:<18}     {4:<18}     {5:<10}     {6:<8}    {7:<8}".format(0, "MAC Src Address", "MAC Dst Address", "IP Src Address", "IP Dst Address", "Protocol", "Port Src", "Port Dst")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
 frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, 
 									highlightcolor = menu_color)
-frames_wrapper.pack(padx = 50, pady = (10,25), fill = tk.BOTH)
+frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
-content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 10, listvariable = tk_printable_frames_list, 
+content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 13, listvariable = tk_printable_frames_list, 
 									selectmode = tk.SINGLE, font = text_font, activestyle = "none", relief = tk.FLAT, highlightthickness = 0,
 									selectbackground = hover_listbox_color)
 
@@ -223,11 +224,11 @@ content_frames.pack(fill = tk.BOTH)
 # Details
 
 # Wrapper and Text Widget
-text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
-text_subtitle.pack(padx = 125, anchor = "w")
+#text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
+#text_subtitle.pack(anchor = "w")
 
 text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, highlightcolor = menu_color)
-text_wrapper.pack(padx = 50, pady = (10,50), fill = tk.BOTH)
+text_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height = screen_height, font = text_font,
 	relief = tk.FLAT, highlightthickness = 0)
@@ -246,7 +247,7 @@ content_text.config(xscrollcommand = text_scrollbar_hor.set)
 text_scrollbar_hor.config(command = content_text.xview)
 
 content_text.pack(fill = tk.BOTH, side = "left", expand = tk.YES)
-
+content_text.config(state = "disabled")
 
 def toggle_all():
 	for widget in content_text.winfo_children():
@@ -259,8 +260,10 @@ def toggle_all():
 	button_display()
 
 	if trame == []:
+		content_text.config(state = "disabled")
 		return
 	
+	content_text.config(state = "normal")
 	if (trame.get_ethernet() != None):
 		content_text.insert(tk.END, trame.get_ethernet())
 		content_text.insert(tk.END, "\n\n")
@@ -297,6 +300,7 @@ def toggle_ethernet():
 	button_display()
 
 	if (trame.get_ethernet() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_ethernet())
 
 	content_text.config(state = "disabled")
@@ -313,6 +317,7 @@ def toggle_ip():
 	button_display()
 
 	if (trame.get_ip() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_ip())
 
 	content_text.config(state = "disabled")
@@ -329,6 +334,7 @@ def toggle_arp():
 	button_display()
 
 	if (trame.get_arp() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_ip())
 
 	content_text.config(state = "disabled")
@@ -345,6 +351,7 @@ def toggle_transport():
 	button_display()
 
 	if (trame.get_transport() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_transport())
 
 	content_text.config(state = "disabled")
@@ -361,6 +368,7 @@ def toggle_http():
 	button_display()
 
 	if (trame.get_http() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_http())
 
 	content_text.config(state = "disabled")
@@ -377,6 +385,7 @@ def toggle_data():
 	button_display()
 
 	if (trame.get_data() != None):
+		content_text.config(state = "normal")
 		content_text.insert(tk.END, trame.get_data())
 
 	content_text.config(state = "disabled")
@@ -384,8 +393,10 @@ def toggle_data():
 
 def button_display():
 	trame = get_selection()
+	content_text.config(state = "normal")
 
 	if trame == []:
+		content_text.config(state = "disabled")
 		return
 
 	all_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
@@ -430,6 +441,7 @@ def button_display():
 		content_text.insert(tk.END, "   ")
 
 	content_text.insert(tk.END, "\n\n")
+	content_text.config(state = "disabled")
 
 
 def on_selected(e):
@@ -441,9 +453,13 @@ def on_selected(e):
 
 	button_display()
 	toggle_all()
+	content_text.config(state = "disabled")
 	
 
 def get_selection():
+	if content_frames.curselection() == ():
+		return []
+
 	i = content_frames.curselection()[0]
 
 	if (i != 0):
