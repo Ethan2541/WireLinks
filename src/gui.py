@@ -193,8 +193,7 @@ content.grid(row = 1, sticky = tk.EW)
 
 printable_frames_list = ["  #{0:04d}     {1:<20}     {2:<20}     {3:<18}     {4:<18}     {5:<10}     {6:<8}    {7:<8}".format(0, "MAC Src Address", "MAC Dst Address", "IP Src Address", "IP Dst Address", "Protocol", "Port Src", "Port Dst")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
-frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, 
-									highlightcolor = hover_listbox_color)
+frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 0, highlightbackground = frame_color)
 frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 13, listvariable = tk_printable_frames_list, 
@@ -226,7 +225,7 @@ content_frames.pack(fill = tk.BOTH)
 #text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
 #text_subtitle.pack(anchor = "w")
 
-text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, highlightcolor = hover_listbox_color)
+text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 0, highlightcolor = hover_listbox_color)
 text_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height = screen_height, font = text_font,
