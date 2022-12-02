@@ -53,7 +53,7 @@ menu_color = "#292927"
 bg_color = "#5b524b"
 frame_color = "#292927"
 entry_color = "#ffffff"
-hover_menu_color = "#5b524b"
+hover_menu_color = "#292927"
 hover_listbox_color = "#5b524b"
 text_color = "#ffffff"
 
@@ -95,7 +95,6 @@ def file_dialog_command():
 
 		else:
 			for i in TrameList.get_liste():
-				print(i.flow_graph())
 				add_frame(i.flow_graph())
 
 folder_icon = tk.PhotoImage(file = os.path.join(dirname, "../icons/folder-open.png"))
@@ -147,12 +146,12 @@ def handle_filters(e):
 
 		else:
 			for i in TrameList.get_liste():
-				add_frame(i.afficher_info_imp_gui())
+				add_frame(i.flow_graph())
 
 	else:
 		liste_filtre = TrameList.filtre(filtre)
 		for i in liste_filtre:
-			add_frame(i.afficher_info_imp_gui())
+			add_frame(i.flow_graph())
 
 
 # Entry for Filters
@@ -195,7 +194,7 @@ content.grid(row = 1, sticky = tk.EW)
 printable_frames_list = ["  #{0:04d}     {1:<20}     {2:<20}     {3:<18}     {4:<18}     {5:<10}     {6:<8}    {7:<8}".format(0, "MAC Src Address", "MAC Dst Address", "IP Src Address", "IP Dst Address", "Protocol", "Port Src", "Port Dst")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
 frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, 
-									highlightcolor = menu_color)
+									highlightcolor = hover_listbox_color)
 frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 13, listvariable = tk_printable_frames_list, 
@@ -227,7 +226,7 @@ content_frames.pack(fill = tk.BOTH)
 #text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
 #text_subtitle.pack(anchor = "w")
 
-text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, highlightcolor = menu_color)
+text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4, highlightbackground = frame_color, highlightcolor = hover_listbox_color)
 text_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height = screen_height, font = text_font,
@@ -399,42 +398,42 @@ def button_display():
 		content_text.config(state = "disabled")
 		return
 
-	all_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+	all_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 							borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 							focusthickness = 0, font = button_font, text = "ALL", command = lambda: toggle_all())
 	content_text.window_create(tk.END, window = all_button)
 	content_text.insert(tk.END, "   ")
 
 	if (trame.get_ethernet() != None):
-		eth_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+		eth_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 							borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 							focusthickness = 0, font = button_font, text = "Ethernet II", command = lambda: toggle_ethernet())
 		content_text.window_create(tk.END, window = eth_button)
 		content_text.insert(tk.END, "   ")
 
 		if (trame.get_ip() != None):
-			ip_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+			ip_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 							borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 							focusthickness = 0, font = button_font, text = trame.ethernet.get_type_eth2(), command = lambda: toggle_ip())
 			content_text.window_create(tk.END, window = ip_button)
 			content_text.insert(tk.END, "   ")
 
 			if (trame.get_transport() != None):
-				tcp_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+				tcp_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 							borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 							focusthickness = 0, font = button_font, text = trame.get_transport().get_typ(), command = lambda: toggle_transport())
 				content_text.window_create(tk.END, window = tcp_button)
 				content_text.insert(tk.END, "   ")
 
 				if (trame.get_http() != None):
-					http_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+					http_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 							borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 							focusthickness = 0, font = button_font, text = "HTTP", command = lambda: toggle_http())
 					content_text.window_create(tk.END, window = http_button)
 					content_text.insert(tk.END, "   ")
 
 	if (trame.get_data() != None):
-		data_button = tkmacosx.Button(content_text, bg = menu_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
+		data_button = tkmacosx.Button(content_text, bg = bg_color, fg = text_color, bd = 5, height = 25, relief = tk.FLAT, width = 175,
 			borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 			focusthickness = 0, font = button_font, text = "Data", command = lambda: toggle_data())
 		content_text.window_create(tk.END, window = data_button)

@@ -183,12 +183,12 @@ class Trame:
 
 	def flow_graph(self):
 		chaine = ""
-		if(self.ip != None and self.ip.typ=="IPV4"):
+		if(self.ip != None and self.ip.typ=="IPv4"):
 			chaine = f"#{self.iden}  {self.ip.get_src()}-------"
 			if(self.http != None):
 				chaine += self.transport.get_port_src()
 				chaine += " |"
-				chaine += self.http.get_http[:12]
+				chaine += self.http.get_http()[:12]
 				chaine += "| "
 				chaine += self.transport.get_port_dst()
 			
