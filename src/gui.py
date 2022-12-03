@@ -77,6 +77,8 @@ right_frame.columnconfigure(0, weight = 1)
 right_frame.rowconfigure(0, weight = 1)
 right_frame.rowconfigure(1, weight = 10000)
 
+frames_for_pdf = []
+
 
 # Menu Buttons
 
@@ -99,6 +101,7 @@ def file_dialog_command():
 		else:
 			for i in TrameList.get_liste():
 				add_frame(i.afficher_info_imp_gui())
+				frames_for_pdf.append(i)
 
 folder_icon = tk.PhotoImage(file = os.path.join(dirname, "../icons/folder-open.png"))
 file_dialog = tkmacosx.Button(menu, bg = menu_color, fg = text_color, bd = 5, height = 80, width = 80, relief = tk.FLAT, 
@@ -119,14 +122,14 @@ def save_command():
 	answer = mb.askyesno("Confirmation", "Do you want to save the analysis of the frames ?")
 
 	if answer:
-		if TrameList.get_liste() != []:
+		if frames_for_pdf != []:
 			filename = sd.askstring("Input", "Enter a filename")
 			if filename != None:
 				if is_invalid_filename(filename):
 					mb.showerror("Error", "Invalid Filename")
 				else:
 					filename = "../" + filename
-					create_pdf(filename, TrameList.get_liste())
+					create_pdf(filename, frames_for_pdf)
 
 		else:
 			mb.showerror("Error", "There is no relevant frame to save")
@@ -160,13 +163,21 @@ def handle_filters(e):
 			mb.showinfo("Info", "The file doesn't have any relevant frame")
 
 		else:
+			for i in range(len(frames_for_pdf)):
+				del frames_for_pdf[0]
+
 			for i in TrameList.get_liste():
 				add_frame(i.afficher_info_imp_gui())
+				frames_for_pdf.append(i)
 
 	else:
+		for i in range(len(frames_for_pdf)):
+			del frames_for_pdf[0]
+			
 		liste_filtre = TrameList.filtre(filtre)
 		for i in liste_filtre:
 			add_frame(i.afficher_info_imp_gui())
+			frames_for_pdf.append(i)
 
 
 # Entry for Filters
