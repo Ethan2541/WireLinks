@@ -157,7 +157,6 @@ class TrameList:
 			while i < taille_str:
 				if (str_filtre[i:i+2] == "==" or str_filtre[i:i+2] == "!=" or str_filtre[i:i+2] == "<>"):
 					filtre = str_filtre[debut_filtre:i]
-					print(filtre)
 					operat = str_filtre[i:i+2]
 					debut_attribut = i+2
 					i += 2
@@ -173,10 +172,10 @@ class TrameList:
 				if(i == taille_str-1 or str_filtre[i:i+2] == "&&" or str_filtre[i:i+2] == "||"):
 					if(i != taille_str-1):
 						attribut = str_filtre[debut_attribut:i]
+						print(attribut)
 						next_concat = str_filtre[i:i+2]
 					debut_filtre = i+2
 					break
-			
 				i += 1
 
 			if (i >= taille_str):
