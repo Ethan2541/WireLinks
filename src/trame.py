@@ -174,11 +174,24 @@ class Trame:
 				
 				if (self.transport != None and self.ip.get_proto2() == "TCP" or self.ip.get_proto2() == "UDP"):
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " " + "{:<8d}" + (fixedlen - len(str(int(self.transport.get_port_src(), 16)))) * " " + "{:<8d}" + (fixedlen - len(str(int(self.transport.get_port_dst(), 16)))) * " ").format(self.ip.get_proto2(), int(self.transport.get_port_src(), 16), int(self.transport.get_port_dst(), 16))
-					
-					if self.ip.get_proto2() == "TCP":
-						chaine += "Seq={}   Ack={}   ".format(self.transport.get_seq_num(), self.transport.get_ack_num())
+					chaine += "Len={} ".format(int(self.get_taille()))
 
-					chaine += "Len={}".format(int(self.get_taille()))
+					if self.ip.get_proto2() == "TCP":
+						if(self.transport.get_syn() == "1"):
+							chaine += "SYN "
+						elif(self.transport.get_ack() == "1"):
+							chaine += "ACK "
+						elif(self.transport.get_fin() == "1"):
+							chaine += "FIN "
+						elif(self.transport.get_psh() == "1"):
+							chaine += "PSH "
+						elif(self.transport.get_urg() == "1"):
+							chaine += "URG "
+						elif(self.transport.get_rst() == "1"):
+							chaine += "RST "
+
+						chaine += "Seq={} Ack={}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
+
 
 				else:
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
@@ -209,21 +222,21 @@ class Trame:
 				else:
 					chaine += "TCP "
 
-				chaine += f"{str(int(self.transport.get_port_src(), 16))} -> {str(int(self.transport.get_port_dst(), 16))} Len={str(int(self.transport.get_thl(), 16) * 4)} "
+				chaine += f"{str(int(self.transport.get_port_src(), 16))} -> {str(int(self.transport.get_port_dst(), 16))} Len={str(int(self.transport.get_thl(), 16) * 4)}"
 				
-				if(self.transport.get_syn() == 1):
+				if(self.transport.get_syn() == "1"):
 					chaine += " SYN "
-				elif(self.transport.get_ack() == 1):
+				elif(self.transport.get_ack() == "1"):
 					chaine += " ACK "
-				elif(self.transport.get_fin() == 1):
+				elif(self.transport.get_fin() == "1"):
 					chaine += " FIN "
-				elif(self.transport.get_psh() == 1):
+				elif(self.transport.get_psh() == "1"):
 					chaine += " PSH "
-				elif(self.transport.get_urg() == 1):
+				elif(self.transport.get_urg() == "1"):
 					chaine += " URG "
-				elif(self.transport.get_rst() == 1):
+				elif(self.transport.get_rst() == "1"):
 					chaine += " RST "
-				chaine += f"Seq={int(self.transport.get_seq_num(), 16)} Ack={int(self.transport.get_ack_num(), 16)}| "
+				chaine += f" Seq={int(self.transport.get_seq_num(), 16)} Ack={int(self.transport.get_ack_num(), 16)}| "
 
 			elif (self.transport != None and self.transport.get_typ() == "UDP"):
 				chaine += " |"

@@ -99,6 +99,9 @@ def file_dialog_command():
 			mb.showinfo("Info", "Empty File or No Valid Frame was Found")
 
 		else:
+			for i in range(len(frames_for_pdf)):
+				del frames_for_pdf[0]
+				
 			for i in TrameList.get_liste():
 				add_frame(i.afficher_info_imp_gui())
 				frames_for_pdf.append(i)
@@ -150,7 +153,7 @@ exit_icon = tk.PhotoImage(file = os.path.join(dirname, "../icons/exit.png"))
 exit_btn = tkmacosx.Button(menu, bg = menu_color, fg = text_color, bd = 5, height = 80, width = 80, relief = tk.FLAT, 
 								borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 								focusthickness = 0, image = exit_icon, command = lambda: exit_command())
-exit_btn.pack()
+exit_btn.pack(side = "bottom")
 
 
 def handle_filters(e):
@@ -192,7 +195,7 @@ def on_focus_out(entry, placeholder):
 		entry.insert(0, placeholder)
 		entry.config(state = "disabled", font = entry_font)
 
-filterbar = tk.Entry(right_frame, bg = menu_color, disabledbackground = menu_color, fg = entry_color, 
+filterbar = tk.Entry(right_frame, bg = menu_color, disabledbackground = menu_color, fg = entry_color, highlightthickness = 4, highlightbackground = "#ffffff",
 							relief = tk.FLAT, disabledforeground = entry_color, bd = 0, font = entry_font)
 filterbar.insert(0, " Type your Filter")
 filterbar.configure(state = "disabled")
@@ -219,7 +222,7 @@ content.grid(row = 1, sticky = tk.EW)
 
 printable_frames_list = [("   {:<4d}" + (8 - len(str(0))) * " " + "{:<20s}" + 15 * " " + "{:<20s}" + 15 * " " + "{:<15s}" + 20 * " " + "{:<15s}" + 15 * " " + "{:<10s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<3s}").format(0, "Src MAC", "Dst MAC", "Src IP", "Dst IP", "Protocol", "Src Port", "Dst Port", "Info")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
-frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 0, highlightbackground = frame_color)
+frames_wrapper = tk.Frame(content, relief = tk.FLAT, highlightthickness = 4, highlightbackground = "#ffffff")
 frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 13, listvariable = tk_printable_frames_list, 
@@ -251,7 +254,7 @@ content_frames.pack(fill = tk.BOTH)
 #text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
 #text_subtitle.pack(anchor = "w")
 
-text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 0, highlightcolor = hover_listbox_color)
+text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4)
 text_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height = screen_height, font = text_font,
