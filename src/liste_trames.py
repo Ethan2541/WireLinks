@@ -138,22 +138,26 @@ class TrameList:
 		return list(set(lst1).union(set(lst2)))
 
 	def filtre(str_filtre):
-		str_filtre.replace("\"", "")
-		str_filtre.replace("(", "")
-		str_filtre.replace(")", "")
-		str_filtre.replace(" ", "")
+		str_filtre = str_filtre.replace("\"", "")
+		str_filtre = str_filtre.replace("(", "")
+		str_filtre = str_filtre.replace(")", "")
+		str_filtre = str_filtre.replace(" ", "")
 		liste_filtre = TrameList.liste_trames
 		liste_filtre_tmp = []
 		taille_str = len(str_filtre)
 		debut_filtre = 0
 		debut_attribut = 0
 		fin_attribut = 0
+		next_concat = ""
+		concat = ""
 		i = 0
 
 		while i < taille_str:
+			concat = next_concat
 			while i < taille_str:
 				if (str_filtre[i:i+2] == "==" or str_filtre[i:i+2] == "!=" or str_filtre[i:i+2] == "<>"):
 					filtre = str_filtre[debut_filtre:i]
+					print(filtre)
 					operat = str_filtre[i:i+2]
 					debut_attribut = i+2
 					i += 2
@@ -169,11 +173,8 @@ class TrameList:
 				if(i == taille_str-1 or str_filtre[i:i+2] == "&&" or str_filtre[i:i+2] == "||"):
 					if(i != taille_str-1):
 						attribut = str_filtre[debut_attribut:i]
-						concat = str_filtre[i:i+2]
-					else:
-						attribut = str_filtre[debut_attribut:i+1]
-						concat = "fin"
-					debut_filtre = i+4
+						next_concat = str_filtre[i:i+2]
+					debut_filtre = i+2
 					break
 			
 				i += 1
@@ -182,6 +183,7 @@ class TrameList:
 				break
 
 			elif (filtre.lower() == "ip.src"):
+				print(attribut)
 				liste_filtre_tmp = TrameList.filtre_ip_src(attribut)
 
 			elif (filtre.lower() == "ip.dst"):
@@ -216,13 +218,10 @@ class TrameList:
 
 					if (attribut.upper() in proto_transport):
 						liste_filtre_tmp = TrameList.filtre_protcole_transport(attribut)
-
 					elif (attribut[2:] in proto_transport_code):
 						liste_filtre_tmp = TrameList.filtre_protcole_transport_code(attribut)
-
 					elif (attribut.upper() in proto_application):
 						liste_filtre_tmp = TrameList.filtre_protcole_application(attribut)
-
 					else:
 						mb.showerror("Error", "Invalid Protocol: ", attribut)
 						i += 3
@@ -233,23 +232,19 @@ class TrameList:
 				return []
 
 			if(operat == "=="):
-				if (concat == "&&"):
+				if (concat == "&&" or concat == ""):
 					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
 				elif (concat == "||"):
 					liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
-				elif (concat == "fin"):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
 				else:
 					mb.showerror("Error", "Operation not supported")
 				i += 3
 
 			elif(operat == "<>" or operat == "!="):
-				if (concat == "&&"):
+				if (concat == "&&" or concat == ""):
 					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
 				elif (concat == "||"):
 					liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
-				elif (concat == "fin"):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
 				else:
 					i += 3
 			
