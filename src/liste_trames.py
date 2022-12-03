@@ -137,6 +137,9 @@ class TrameList:
 	def union(lst1, lst2):
 		return list(set(lst1).union(set(lst2)))
 
+	#def sort(liste):
+
+
 	def filtre(str_filtre):
 		str_filtre = str_filtre.replace("\"", "")
 		str_filtre = str_filtre.replace("(", "")
@@ -169,11 +172,15 @@ class TrameList:
 					i += 1
 
 			while i < taille_str:
-				if(i == taille_str-1 or str_filtre[i:i+2] == "&&" or str_filtre[i:i+2] == "||"):
+				if(i == taille_str-1 or str_filtre[i+1:i+3] == "&&" or str_filtre[i+1:i+3] == "||"):
+					attribut = str_filtre[debut_attribut:i+1]
+					print(attribut)
 					if(i != taille_str-1):
-						attribut = str_filtre[debut_attribut:i]
-						next_concat = str_filtre[i:i+2]
-					debut_filtre = i+2
+						next_concat = str_filtre[i+1:i+3]
+					else:
+						next_concat = ""
+					print(next_concat)
+					debut_filtre = i+3
 					break
 			
 				i += 1

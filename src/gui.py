@@ -101,7 +101,7 @@ def file_dialog_command():
 		else:
 			for i in range(len(frames_for_pdf)):
 				del frames_for_pdf[0]
-				
+
 			for i in TrameList.get_liste():
 				add_frame(i.afficher_info_imp_gui())
 				frames_for_pdf.append(i)
@@ -154,6 +154,18 @@ exit_btn = tkmacosx.Button(menu, bg = menu_color, fg = text_color, bd = 5, heigh
 								borderless = True, activebackground = menu_color, activeforeground = text_color, overbackground = hover_menu_color,
 								focusthickness = 0, image = exit_icon, command = lambda: exit_command())
 exit_btn.pack(side = "bottom")
+
+
+def insert_sort(trames):
+    for i in range(1, len(tab)): 
+        k = trames[i].get_iden() 
+        j = i - 1
+
+        while j >= 0 and k < tab[j].get_iden() : 
+            tab[j + 1] = tab[j] 
+            j -= 1
+            
+        tab[j + 1] = k
 
 
 def handle_filters(e):
