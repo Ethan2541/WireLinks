@@ -405,7 +405,7 @@ def button_display():
 	trame = get_selection()
 	content_text.config(state = "normal")
 
-	if trame == []:
+	if trame == None or trame == []:
 		content_text.config(state = "disabled")
 		return
 

@@ -182,12 +182,12 @@ class Trame:
 
 				else:
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
-					chaine += (3 * fixedlen) * " "
+					chaine += (2 * fixedlen + 15) * " "
 					chaine += "Len={}".format(int(self.get_taille()))
 
 			elif (self.ip != None and self.ethernet.get_type_eth2() == "ARP" or self.ethernet.get_type_eth2() == "RARP"):
 				chaine += ("{:<15s}" + (fixedlen - len(self.ip.get_ip_src())) * " " + "{:<15s}" + (fixedlen - len(self.ip.get_ip_dst())) * " " + "{:<10s}" + (fixedlen - len(self.ethernet.get_type_eth2())) * " ").format(self.ip.get_ip_src(), self.ip.get_ip_dst(), self.ethernet.get_type_eth2())
-				chaine += (3 * fixedlen) * " "
+				chaine += (2 * fixedlen + 15) * " "
 				chaine += "Who has {}   Len={}".format(self.ip.get_ip_dst(), int(self.get_taille()))
 
 		else:
@@ -243,10 +243,17 @@ class Trame:
 			chaine += f"-------> {self.ip.get_dst()}"
 
 		elif (self.ip != None and self.ip.get_typ() == "ARP"):
-			chaine += f"#{self.iden}  {self.ip.get_ip_src()} -------"
+			chaine += f"{self.iden}  {self.ip.get_ip_src()} -------"
 			chaine += " |"
-			chaine += f"ARP Type={self.ip.get_op2()}| "
-			chaine += f"-------> {self.ip.get_ip_dst()}"
+			chaine += f"ARP Type={self.ip.get_op2()}"
+
+			if (self.ip.get_op() == "0001"):
+				chaine += f" Who has {self.ip.get_ip_dst()} Tell {self.ip.get_eth_src()}"
+
+			elif (self.ip.get_op() == "0002"):
+				chaine += f" {self.ip.get_ip_src()} is at {self.ip.get_eth_src()}"
+
+			chaine += f"| -------> {self.ip.get_ip_dst()}"
 
 		return chaine
 
