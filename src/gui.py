@@ -157,15 +157,15 @@ exit_btn.pack(side = "bottom")
 
 
 def insert_sort(trames):
-    for i in range(1, len(tab)): 
+    for i in range(1, len(trames)): 
         k = trames[i].get_iden() 
         j = i - 1
 
-        while j >= 0 and k < tab[j].get_iden() : 
-            tab[j + 1] = tab[j] 
+        while j >= 0 and k < trames[j].get_iden() : 
+            trames[j + 1] = trames[j] 
             j -= 1
-            
-        tab[j + 1] = k
+
+        trames[j + 1] = k
 
 
 def handle_filters(e):
@@ -193,6 +193,7 @@ def handle_filters(e):
 		for i in liste_filtre:
 			add_frame(i.afficher_info_imp_gui())
 			frames_for_pdf.append(i)
+		insert_sort(frames_for_pdf)
 
 
 # Entry for Filters
