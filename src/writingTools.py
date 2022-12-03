@@ -1,3 +1,4 @@
+import os
 from fpdf import FPDF
 from trame import *
 from liste_trames import *
@@ -6,6 +7,7 @@ class PDF(FPDF):
 	def header(self):
 		self.set_font("Helvetica", "B", size = 20)
 		self.set_line_width(1)
+		self.image(os.path.join(os.path.dirname(__file__), "../icons/logo_pdf.png"), 10, 8, 15)
 		self.cell(0, 10, "FLOW CHART", new_x = "LMARGIN", new_y = "NEXT", align = "C", border = "B")
 		self.ln(8)
 

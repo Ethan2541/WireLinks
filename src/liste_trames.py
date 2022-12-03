@@ -172,17 +172,16 @@ class TrameList:
 				if(i == taille_str-1 or str_filtre[i:i+2] == "&&" or str_filtre[i:i+2] == "||"):
 					if(i != taille_str-1):
 						attribut = str_filtre[debut_attribut:i]
-						print(attribut)
 						next_concat = str_filtre[i:i+2]
 					debut_filtre = i+2
 					break
+			
 				i += 1
 
 			if (i >= taille_str):
 				break
 
 			elif (filtre.lower() == "ip.src"):
-				print(attribut)
 				liste_filtre_tmp = TrameList.filtre_ip_src(attribut)
 
 			elif (filtre.lower() == "ip.dst"):
