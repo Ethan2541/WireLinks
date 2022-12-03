@@ -104,6 +104,7 @@ file_dialog = tkmacosx.Button(menu, bg = menu_color, fg = text_color, bd = 5, he
 								focusthickness = 0, image = folder_icon, command = lambda: file_dialog_command())
 file_dialog.pack()
 
+
 # Export to PDF
 def is_invalid_filename(filename):
 	invalid_characters = ["/", "\\", ":", "*", "?", "\"", "<", ">", "|"]
@@ -203,7 +204,7 @@ content.grid(row = 1, sticky = tk.EW)
 #frames_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "List of Frames")
 #frames_subtitle.pack(anchor = "w")
 
-printable_frames_list = [("   {:<4d}" + (8 - len(str(0))) * " " + "{:<20s}" + 15 * " " + "{:<20s}" + 15 * " " + "{:<15s}" + 15 * " " + "{:<15s}" + 20 * " " + "{:<10s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<3s}").format(0, "Src MAC", "Dst MAC", "Src IP", "Dst IP", "Protocol", "Src Port", "Dst Port", "Info")]
+printable_frames_list = [("   {:<4d}" + (8 - len(str(0))) * " " + "{:<20s}" + 15 * " " + "{:<20s}" + 15 * " " + "{:<15s}" + 20 * " " + "{:<15s}" + 15 * " " + "{:<10s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<3s}").format(0, "Src MAC", "Dst MAC", "Src IP", "Dst IP", "Protocol", "Src Port", "Dst Port", "Info")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
 frames_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 0, highlightbackground = frame_color)
 frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
@@ -477,7 +478,6 @@ def get_selection():
 	else:
 		return []			
 
-content_frames.bind('<<ListboxSelect>>', on_selected)	
-
+content_frames.bind('<<ListboxSelect>>', on_selected)
 
 root.mainloop()
