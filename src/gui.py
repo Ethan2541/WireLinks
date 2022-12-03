@@ -167,6 +167,7 @@ def insert_sort(trames):
 			j -= 1
 
 		trames[j + 1] = tmp
+	return trames
 
 
 def handle_filters(e):
@@ -191,11 +192,11 @@ def handle_filters(e):
 			del frames_for_pdf[0]
 			
 		liste_filtre = TrameList.filtre(filtre)
-		for i in liste_filtre:
+			
+		for i in insert_sort(liste_filtre):
 			add_frame(i.afficher_info_imp_gui())
 			frames_for_pdf.append(i)
 
-		insert_sort(frames_for_pdf)
 
 
 # Entry for Filters
