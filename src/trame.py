@@ -239,6 +239,11 @@ class Trame:
 				chaine += " |"
 				chaine += f"ICMP Type={self.transport.get_typ_icmp2()}"
 				chaine += "| "
+
+			elif (self.transport != None and self.transport.get_typ()=="IGMP"):
+				chaine += " |"
+				chaine += f"IGMP"
+				chaine += "| "
 			
 			chaine += f"-------> {self.ip.get_dst()}"
 
@@ -256,18 +261,6 @@ class Trame:
 			chaine += f"| -------> {self.ip.get_ip_dst()}"
 
 		return chaine
-
-	def comm_flow(self):
-		comm = ""
-		
-		if(self.ip != None and self.ip.get_typ() == "IPV4"):
-			print()
-
-		elif(self.ip != None and self.ip.get_typ() == "ARP"):
-			if (self.ip.get_op() == "0001"):
-				comm += f"ARP who has {self.ip.get_ip_dst()} tell {self.ip.get_eth_src()}"
-			elif (self.ip.get_op() == "0002"):
-				comm += f"ARP {self.ip.get_ip_src()} is at {self.ip.get_eth_src()}"
 
 
 	# String

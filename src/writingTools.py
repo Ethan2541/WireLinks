@@ -30,6 +30,10 @@ class PDF(FPDF):
 			elif (trame.transport != None and trame.transport.get_typ()=="ICMP"):
 				self.set_fill_color(252, 224, 255)
 
+			elif (trame.transport != None and trame.transport.get_typ()=="IGMP"):
+				self.set_fill_color(254, 255, 208)
+
+
 		elif (trame.ip != None and trame.ip.get_typ() == "ARP"):
 			self.set_fill_color(250, 240, 215)
 
