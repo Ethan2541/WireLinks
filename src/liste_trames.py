@@ -247,15 +247,12 @@ class TrameList:
 
 			elif(operat == "<>" or operat == "!="):
 				if (concat == "&&" or concat == ""):
-					liste_filtre = TrameList.intersection(liste_filtre, liste_filtre_tmp)
+					liste_filtre = TrameList.intersection(liste_filtre, TrameList.exclu(liste_filtre, liste_filtre_tmp))
 				elif (concat == "||"):
-					liste_filtre = TrameList.union(liste_filtre, liste_filtre_tmp)
+					liste_filtre = TrameList.union(liste_filtre, TrameList.exclu(liste_filtre, liste_filtre_tmp))
 				else:
-					i += 3
-			
-			else:
-				mb.showerror("Error", "Operation not supported")
-				return []
+					mb.showerror("Error", "Operation not supported")
+				i += 3
 
 		return liste_filtre
 	
