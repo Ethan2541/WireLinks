@@ -131,7 +131,7 @@ def save_command():
 				if is_invalid_filename(filename):
 					mb.showerror("Error", "Invalid Filename")
 				else:
-					filename = "../output/" + filename
+					filename = os.path.join(dirname, "../output/" + filename)
 					create_pdf(filename, frames_for_pdf)
 
 		else:
