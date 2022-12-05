@@ -19,7 +19,7 @@ class PDF(FPDF):
 	def print_cell(self, trame):
 		content = trame.flow_graph()
 
-		self.set_font("Helvetica", size = 10)
+		self.set_font("Helvetica", size = 9)
 		self.set_fill_color(255, 255, 255)
 
 		if (trame.ip != None and trame.ip.typ=="IPv4"):
@@ -34,6 +34,9 @@ class PDF(FPDF):
 
 			elif (trame.transport != None and trame.transport.get_typ()=="IGMP"):
 				self.set_fill_color(254, 255, 208)
+
+			if (trame.http != None):
+				self.set_fill_color(231, 230, 255)
 
 
 		elif (trame.ip != None and trame.ip.get_typ() == "ARP"):
@@ -59,4 +62,3 @@ def create_pdf(filename, trame_liste):
 		filename += ".pdf"	
 
 	pdf.output(filename)
-	os.system(filename)

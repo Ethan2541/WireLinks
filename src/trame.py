@@ -179,25 +179,27 @@ class Trame:
 					if self.ip.get_proto2() == "TCP":
 						if(self.transport.get_syn() == "1"):
 							chaine += "SYN "
-						elif(self.transport.get_ack() == "1"):
+						if(self.transport.get_ack() == "1"):
 							chaine += "ACK "
-						elif(self.transport.get_fin() == "1"):
+						if(self.transport.get_fin() == "1"):
 							chaine += "FIN "
-						elif(self.transport.get_psh() == "1"):
+						if(self.transport.get_psh() == "1"):
 							chaine += "PSH "
-						elif(self.transport.get_urg() == "1"):
+						if(self.transport.get_urg() == "1"):
 							chaine += "URG "
-						elif(self.transport.get_rst() == "1"):
+						if(self.transport.get_rst() == "1"):
 							chaine += "RST "
 
 						chaine += "Seq={} Ack={}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
 
 					if (self.http != None):
-						chaine += f"{self.http.get_version()} "
-						if(self.http.get_method() != None):
-							f"{self.http.get_code()} {self.http.get_msg()}"
+						chaine += f"  {self.http.get_version() } "
+
+						if (self.http.get_method() == None):
+							chaine += f"{self.http.get_code()} {self.http.get_msg()}"
+
 						else:
-							f"{self.http.get_method()} {self.http.get_url()}"
+							chaine += f"{self.http.get_method()} {self.http.get_url()}"
 
 
 				else:
@@ -231,7 +233,13 @@ class Trame:
 			if (self.transport != None and self.transport.get_typ() == "TCP"):
 				chaine += " |"
 				if (self.http != None):
-					chaine += f"HTTP Application Data {self.http.get_http()} "
+						chaine += f"{self.http.get_version() } "
+
+						if (self.http.get_method() == None):
+							chaine += f"{self.http.get_code()} {self.http.get_msg()} "
+
+						else:
+							chaine += f"{self.http.get_method()} {self.http.get_url()} "
 
 				else:
 					chaine += "TCP "
@@ -240,22 +248,29 @@ class Trame:
 				
 				if(self.transport.get_syn() == "1"):
 					chaine += " SYN "
-				elif(self.transport.get_ack() == "1"):
+				if(self.transport.get_ack() == "1"):
 					chaine += " ACK "
-				elif(self.transport.get_fin() == "1"):
+				if(self.transport.get_fin() == "1"):
 					chaine += " FIN "
-				elif(self.transport.get_psh() == "1"):
+				if(self.transport.get_psh() == "1"):
 					chaine += " PSH "
-				elif(self.transport.get_urg() == "1"):
+				if(self.transport.get_urg() == "1"):
 					chaine += " URG "
-				elif(self.transport.get_rst() == "1"):
+				if(self.transport.get_rst() == "1"):
 					chaine += " RST "
 				chaine += f" Seq={int(self.transport.get_seq_num(), 16)} Ack={int(self.transport.get_ack_num(), 16)}| "
 
 			elif (self.transport != None and self.transport.get_typ() == "UDP"):
 				chaine += " |"
+
 				if (self.http != None):
-					chaine += f"HTTP Application Data {self.http.get_http()} "
+						chaine += f"{self.http.get_version() } "
+
+						if (self.http.get_method() == None):
+							chaine += f"{self.http.get_code()} {self.http.get_msg()} "
+
+						else:
+							chaine += f"{self.http.get_method()} {self.http.get_url()} "
 
 				else:
 					chaine += "UDP "

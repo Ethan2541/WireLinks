@@ -46,7 +46,6 @@ class Http:
 		else:
 			for i in range(len(self.http)):
 				if(self.http[i] == " "):
-					print(i)
 					self.method = self.http[:i]
 					fin_version = i
 					break
