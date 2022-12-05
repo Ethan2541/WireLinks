@@ -16,6 +16,43 @@ class Http:
 		if(self.data.replace(" ", "").replace("\n", "") == ""):
 			self.data = None
 
+	def get_header(self):
+		fin_version = 0
+		fin_code = 0
+		if(self.http[:4] == "HTTP"):
+			self.method = None
+			self.url = None
+			for i in range(len(self.http)):
+				if(i == " "):
+					self.version = self.http[:i]
+					fin_version = i
+					break
+			for i in range(fin_version+1, len(self.http)):
+				if(i == " "):
+					self.code = self.http[fin_version+1:i]
+					fin_code = i
+					break
+			for i in range(fin_code+1, len(self.http)):
+				if(i == "\r"):
+					self.msg = self.http[fin_code+1:i]
+					break
+		else:
+			self.code = None
+			self.msg = None
+			for i in range(len(self.http)):
+				if(i == " "):
+					self.method = self.http[:i]
+					fin_version = i
+					break
+			for i in range(fin_version+1, len(self.http)):
+				if(i == " "):
+					self.url = self.http[fin_version+1:i]
+					fin_code = i
+					break
+			for i in range(fin_code+1, len(self.http)):
+				if(i == "\r"):
+					self.version = self.http[fin_code+1:i]
+					break
 
 	# Getters
 	def get_http(self):
@@ -26,6 +63,22 @@ class Http:
 	
 	def get_data_ascii(self):
 		return self.data_ascii
+
+	def get_version(self):
+		return self.version
+	
+	def get_method(self):
+		return self.method
+
+	def get_url(self):
+		return self.url
+
+	def get_code(self):
+		return self.code
+
+	def get_msg(self):
+		return self.msg
+
 
 
 	# String
