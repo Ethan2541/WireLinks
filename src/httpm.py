@@ -1,5 +1,11 @@
 class Http:
 	def __init__(self, trame):
+		self.code = None
+		self.msg = None
+		self.version = None
+		self.url = None
+		self.version = None
+		self.method = None
 		self.fin_http = 0
 		self.http = ""
 
@@ -15,43 +21,42 @@ class Http:
 		
 		if(self.data.replace(" ", "").replace("\n", "") == ""):
 			self.data = None
+		
+		self.header()
 
 
-	def get_header(self):
+	def header(self):
 		fin_version = 0
 		fin_code = 0
-		if(self.http[:4] == "HTTP"):
-			self.method = None
-			self.url = None
+		if(self.http[:4] == "HTTP"):	
 			for i in range(len(self.http)):
-				if(i == " "):
+				if(self.http[i] == " "):
 					self.version = self.http[:i]
 					fin_version = i
 					break
 			for i in range(fin_version+1, len(self.http)):
-				if(i == " "):
+				if(self.http[i] == " "):
 					self.code = self.http[fin_version+1:i]
 					fin_code = i
 					break
 			for i in range(fin_code+1, len(self.http)):
-				if(i == "\r"):
+				if(self.http[i] == "\r"):
 					self.msg = self.http[fin_code+1:i]
 					break
 		else:
-			self.code = None
-			self.msg = None
 			for i in range(len(self.http)):
-				if(i == " "):
+				if(self.http[i] == " "):
+					print(i)
 					self.method = self.http[:i]
 					fin_version = i
 					break
 			for i in range(fin_version+1, len(self.http)):
-				if(i == " "):
+				if(self.http[i] == " "):
 					self.url = self.http[fin_version+1:i]
 					fin_code = i
 					break
 			for i in range(fin_code+1, len(self.http)):
-				if(i == "\r"):
+				if(self.http[i] == "\r"):
 					self.version = self.http[fin_code+1:i]
 					break
 

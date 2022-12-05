@@ -193,7 +193,11 @@ class Trame:
 						chaine += "Seq={} Ack={}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
 
 					if (self.http != None):
-						chaine += f"{self.http.get_version()} {self.http.get_method()} {self.http.get_url()}"
+						chaine += f"{self.http.get_version()} "
+						if(self.http.get_method() != None):
+							f"{self.http.get_code()} {self.http.get_msg()}"
+						else:
+							f"{self.http.get_method()} {self.http.get_url()}"
 
 
 				else:
