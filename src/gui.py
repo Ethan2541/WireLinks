@@ -226,15 +226,11 @@ filterbar.bind("<Return>", handle_filters)
 # Content
 content = tk.Frame(right_frame, bg = bg_color)
 content.grid(row = 1, sticky = tk.EW)
-#content_title = tk.Label(content, bg = bg_color, font = title_font, fg = text_color, text = "FRAMES ANALYSIS")
-#content_title.pack(pady = (50, 25))
 
 
 # List of Frames
 
 # Wrapper and Listbox
-#frames_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "List of Frames")
-#frames_subtitle.pack(anchor = "w")
 
 printable_frames_list = [("   {:<4d}" + (8 - len(str(0))) * " " + "{:<20s}" + 15 * " " + "{:<20s}" + 15 * " " + "{:<15s}" + 20 * " " + "{:<15s}" + 15 * " " + "{:<10s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<2s}" + 20 * " " + "{:<3s}").format(0, "Src MAC", "Dst MAC", "Src IP", "Dst IP", "Protocol", "Src Port", "Dst Port", "Info")]
 tk_printable_frames_list = tk.Variable(value = printable_frames_list)
@@ -267,8 +263,6 @@ content_frames.pack(fill = tk.BOTH)
 # Details
 
 # Wrapper and Text Widget
-#text_subtitle = tk.Label(content, bg = bg_color, font = subtitle_font, fg = text_color, text = "Details")
-#text_subtitle.pack(anchor = "w")
 
 text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4)
 text_wrapper.pack(pady = (50,0), fill = tk.BOTH)

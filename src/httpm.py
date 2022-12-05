@@ -16,6 +16,7 @@ class Http:
 		if(self.data.replace(" ", "").replace("\n", "") == ""):
 			self.data = None
 
+
 	def get_header(self):
 		fin_version = 0
 		fin_code = 0

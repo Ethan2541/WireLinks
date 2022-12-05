@@ -192,6 +192,9 @@ class Trame:
 
 						chaine += "Seq={} Ack={}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
 
+					if (self.http != None):
+						chaine += f"{self.http.get_version()} {self.http.get_method()} {self.http.get_url()}"
+
 
 				else:
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
