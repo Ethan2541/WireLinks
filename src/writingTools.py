@@ -59,4 +59,4 @@ def create_pdf(filename, trame_liste):
 		filename += ".pdf"	
 
 	pdf.output(filename)
-	os.startfile(filename)
+	os.system(filename)

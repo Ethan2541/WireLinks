@@ -10,6 +10,7 @@ class Http:
 			else:
 				self.http += chr(int(trame[i:i+2], 16))
 
+		self.data_ascii = trame[self.fin_http+4:]
 		self.data = "".join(chr(int(trame[i:i+2], 16)) for i in range(self.fin_http+4, len(trame), 2))
 		
 		if(self.data.replace(" ", "").replace("\n", "") == ""):
@@ -22,6 +23,9 @@ class Http:
 
 	def get_data(self):
 		return self.data
+	
+	def get_data_ascii(self):
+		return self.data_ascii
 
 
 	# String
