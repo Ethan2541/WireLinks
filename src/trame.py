@@ -224,7 +224,7 @@ class Trame:
 			if (self.transport != None and self.transport.get_typ() == "TCP"):
 				chaine += " |"
 				if (self.http != None):
-					chaine += "HTTP Application Data "
+					chaine += f"HTTP Application Data {self.http.get_http()} "
 
 				else:
 					chaine += "TCP "
@@ -248,7 +248,7 @@ class Trame:
 			elif (self.transport != None and self.transport.get_typ() == "UDP"):
 				chaine += " |"
 				if (self.http != None):
-					chaine += "HTTP Application Data "
+					chaine += f"HTTP Application Data {self.http.get_http()} "
 
 				else:
 					chaine += "UDP "
