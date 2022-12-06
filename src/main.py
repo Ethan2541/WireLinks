@@ -58,6 +58,7 @@ entry_color = "#ffffff"
 hover_menu_color = "#5b524b"
 hover_listbox_color = "#5b524b"
 hover_button_color = "#292927"
+highlight_color = "#646464"
 text_color = "#ffffff"
 
 
@@ -225,7 +226,7 @@ def on_focus_out(entry, placeholder):
 		entry.config(state = "disabled", font = entry_font)
 
 filterbar = tk.Entry(right_frame, bg = menu_color, disabledbackground = menu_color, fg = entry_color, highlightthickness = 4, highlightbackground = "#ffffff",
-							relief = tk.FLAT, disabledforeground = entry_color, bd = 0, font = entry_font)
+							relief = tk.FLAT, disabledforeground = entry_color, bd = 0, font = entry_font, highlightcolor = highlight_color)
 filterbar.insert(0, " Type your Filter")
 filterbar.configure(state = "disabled")
 filterbar.grid(row = 0, sticky = tk.EW)
@@ -252,7 +253,7 @@ frames_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_frames = tk.Listbox(frames_wrapper, bg = frame_color, fg = text_color, height = 13, listvariable = tk_printable_frames_list, 
 									selectmode = tk.SINGLE, font = text_font, activestyle = "none", relief = tk.FLAT, highlightthickness = 0,
-									selectbackground = hover_listbox_color)
+									selectbackground = hover_listbox_color, highlightcolor = highlight_color)
 
 # Frame Insertion
 def add_frame(trame):
@@ -282,7 +283,7 @@ text_wrapper = tk.Frame(content, relief = tk.GROOVE, highlightthickness = 4)
 text_wrapper.pack(pady = (50,0), fill = tk.BOTH)
 
 content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height = screen_height, font = text_font,
-	relief = tk.FLAT, highlightthickness = 0)
+	relief = tk.FLAT, highlightthickness = 0, highlightcolor = highlight_color)
 
 
 # Scrollbars

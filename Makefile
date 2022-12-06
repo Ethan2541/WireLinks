@@ -1,5 +1,5 @@
 run:
-	python src/main.py
+	python3 src/main.py
 
 setup:
 	- brew install pip
@@ -9,5 +9,5 @@ setup:
 	pip install -r requirements.txt
 
 clean:
-	- rmdir -f src/__pycache__
-	- rmdir -f src/__pycache__
+	- rm -rf src/__pycache__
+	- rmdir /s /q src/__pycache__
