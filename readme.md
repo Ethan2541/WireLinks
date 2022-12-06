@@ -42,3 +42,28 @@ Icons and Fonts
 ---
 
 The "icons" folder has the required icons for the menu bar. You can also install the Roboto font available in the "fonts" folder for better experience.
+
+
+Filter options
+---
+
+There is different filter options that you can type in the filter bar on the top of the application to filter frames.
+Here is all of them:
+	- `ip.src` for the source ip address
+	- `ip.dst` for the ip destination address
+	- `mac.src` for the mac source address
+	- `mac.dst` for the mac destination address
+	- `port.src` for the port source address
+	- `port.dst` for the port destination address
+	- `proto` to search for a particular protocol
+
+Then you have to give the type of operation you want: `==` or `<>` or `!=` (`<>` and `!=` are tha same)
+
+Then you would give the value that you are searching for.
+	-For ip addresses, you have to type them in this format: `192.168.0.0`
+	-For mac addresses, you have to type them in this format: `FF:FF:FF:FF:FF:FF`
+	-For port numbers, you have to type them in decimal like this: `80`
+	-For protocols, you can type their name like: `tcp` or their hexadecimal code like: `0x06`
+	
+	Here are the supported protocoles by our filters:
+		`IPv4`, `IPv6`, `ARP`, `ICMP`, `TCP`, `UDP`, `IGMP`, `EGP`, `IGP`, `XTP"`, "RSVP`,`HTTP`, `HTTPS`, "DNS`, `DHCP`, `SMTP`, `IMAP`, `POP`, `SSH`, `RDP`, `FTP`
