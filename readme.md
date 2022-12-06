@@ -69,7 +69,7 @@ Then you would give the value that you are searching for
 | Port number  | decimal (ex: 80)			|
 | Protocol     | name(ex: TCP) or hex number(ex: 0x06)	|
 
-Here are the supported protocols by our filters:
+Here are the protocols our filters can recognize within a frame:
 - `IPv4`
 - `IPv6`
 - `ARP`
