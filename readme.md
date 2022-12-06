@@ -24,10 +24,10 @@ Protocols
 ---
 
 Here is the list of the supported protocols:
-- Link-layer : Ethernet II (no preamble and no trailer)
-- Network-layer : IPv4, ARP, ICMP, IGMP
-- Transport-layer : TCP, UDP
-- Application-layer : HTTP
+- Link-layer : `Ethernet II` (no preamble and no trailer)
+- Network-layer : `IPv4`, `ARP`, `ICMP`, `IGMP`
+- Transport-layer : `TCP`, `UDP`
+- Application-layer : `HTTP`
 
 These protocols are implemented as classes, in eponym files. The latter all have a parser, getters and str representation.
 
@@ -44,52 +44,52 @@ Icons and Fonts
 The "icons" folder has the required icons for the menu bar. You can also install the Roboto font available in the "fonts" folder for better experience.
 
 
-Filter options
+Filter Options
 ---
 
-There is different filter options that you can type in the filter bar on the top of the application to filter frames.
-Here is all of them:
-	- `ip.src` for the source ip address
-	- `ip.dst` for the ip destination address
-	- `mac.src` for the mac source address
-	- `mac.dst` for the mac destination address
-	- `port.src` for the port source address
-	- `port.dst` for the port destination address
-	- `proto` to search for a particular protocol
+There are different filter options that you can type in the filter bar on the top of the application to filter the frames.
+
+Here they are:
+- `ip.src` for the source ip address
+- `ip.dst` for the ip destination address
+- `mac.src` for the mac source address
+- `mac.dst` for the mac destination address
+- `port.src` for the port source address
+- `port.dst` for the port destination address
+- `proto` to look for a particular protocol
 
 Then you have to give the type of operation you want: `==` or `<>` or `!=` (`<>` and `!=` are tha same)
 
 Then you would give the value that you are searching for
 
-| Value        | Format								    |
+| Value        | Format					|
 | ------------ | -------------------------------------- |
-| IP address   | 192.168.0.0							|
-| MAC address  | FF:FF:FF:FF:FF:FF						|
-| Port number  | decimal (ex: 80)						|
+| IP address   | 192.168.0.0				|
+| MAC address  | FF:FF:FF:FF:FF:FF			|
+| Port number  | decimal (ex: 80)			|
 | Protocol     | name(ex: TCP) or hex number(ex: 0x06)	|
 
-Here are the supported protocoles by our filters:
+Here are the supported protocols by our filters:
+-`IPv4`
+-`IPv6`
+-`ARP`
+-`ICMP`
+-`TCP`
+-`UDP`
+-`IGMP`
+-`EGP`
+-`IGP`
+-`XTP`
+-`RSVP`
+-`HTTP`
+-`HTTPS`
+-`DNS`
+-`DHCP`
+-`SMTP`
+-`IMAP`
+-`POP`
+-`SSH`
+-`RDP`
+-`FTP`
 
-⋅⋅⋅ - `IPv4`
-⋅⋅⋅ - `IPv6`
-⋅⋅⋅ - `ARP`
-⋅⋅⋅ - `ICMP`
-⋅⋅⋅ - `TCP`
-⋅⋅⋅ - `UDP`
-⋅⋅⋅ - `IGMP`
-⋅⋅⋅ - `EGP`
-⋅⋅⋅ - `IGP`
-⋅⋅⋅ - `XTP`
-⋅⋅⋅ - `RSVP`
-⋅⋅⋅ - `HTTP`
-⋅⋅⋅ - `HTTPS`
-⋅⋅⋅ - `DNS`
-⋅⋅⋅ - `DHCP`
-⋅⋅⋅ - `SMTP`
-⋅⋅⋅ - `IMAP`
-⋅⋅⋅ - `POP`
-⋅⋅⋅ - `SSH`
-⋅⋅⋅ - `RDP`
-⋅⋅⋅ - `FTP`
-
-Finally you have to give your (j'ai pas de mots). You can use `&&` for an and (..) or you can use `||` for an or (..)
+Finally, you can provide a binary operator among: `&&` (and) and `||` (or) in order to use several filters at once.
