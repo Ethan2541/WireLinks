@@ -1,22 +1,24 @@
 class Ip:
-	def __init__(self, trame, typ):
+
+	def __init__(self, frame, typ):
 		# Parsing the default header fields
 		self.typ = typ
 
-		self.version = trame[0]
-		self.ihl = trame[1]
-		self.tos = trame[2:4]
-		self.ttlength = trame[4:8]
+		self.version = frame[0]
+		self.ihl = frame[1]
+		self.tos = frame[2:4]
+		self.ttlength = frame[4:8]
 
-		self.iden = trame[8:12]
-		self.flags = int(trame[12], 16) >> 1
+		self.iden = frame[8:12]
+		self.flags = int(frame[12], 16) >> 1
 		self.res = str((self.flags & 0b100) >> 1)
 		self.df = str((self.flags & 0b010) >> 1)
 		self.mf = str((self.flags & 0b001) >> 1)
-		self.fragoff = str(int(trame[13:16], 16) << 1)
+		self.fragoff = str(int(frame[13:16], 16) << 1)
 
-		self.ttl = trame[16:18]
-		self.proto = trame[18:20]
+		self.ttl = frame[16:18]
+		self.proto = frame[18:20]
+
 
 		# Determining the correct protocol
 		if (self.proto == "06"):
@@ -38,21 +40,24 @@ class Ip:
 		else:
 			self.proto2 = "Unknown"
 
-		self.chk = trame[20:24]
 
-		self.src = f"{int(trame[24:26], 16)}.{int(trame[26:28], 16)}.{int(trame[28:30], 16)}.{int(trame[30:32], 16)}"
+		self.chk = frame[20:24]
+
+		self.src = f"{int(frame[24:26], 16)}.{int(frame[26:28], 16)}.{int(frame[28:30], 16)}.{int(frame[30:32], 16)}"
 		
-		self.dst = f"{int(trame[32:34], 16)}.{int(trame[34:36], 16)}.{int(trame[36:38], 16)}.{int(trame[38:40], 16)}"
+		self.dst = f"{int(frame[32:34], 16)}.{int(frame[34:36], 16)}.{int(frame[36:38], 16)}.{int(frame[38:40], 16)}"
 		
+
 		# Options
 		self.opt_length = int(self.ihl, 16)*8 - 40
-		self.opt = trame[40:40+self.opt_length]
+		self.opt = frame[40:40+self.opt_length]
 		self.options()
 
-		if(trame[40+self.opt_length:] != ""):
-			self.data = trame[40+self.opt_length:]
+		if(frame[40+self.opt_length:] != ""):
+			self.data = frame[40+self.opt_length:]
 		else:
 			self.data = None
+
 
 
 	def options(self):
@@ -62,22 +67,29 @@ class Ip:
 		nb_opt = 0
 
 		while (next_opt != self.opt_length):
+
 			if (self.opt[next_opt:next_opt+2] == "00"):
 				self.opt_det.append({"EEOL": self.opt[next_opt:]})
 				next_opt = self.opt_length
 				nb_opt = nb_opt + 1
 
+
 			elif(self.opt[next_opt:next_opt+2] == "07"):
+
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
 				self.opt_det.append({"name": "RR", "len":len_opt})
 				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
 				self.opt_det[nb_opt]["ip"] = []
+
 				for i in range(next_opt+6, next_opt+len_opt, 8):
 					self.opt_det[nb_opt]["ip"].append(self.opt[i: i+8])
+
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
+
 			elif (self.opt[next_opt:next_opt+2] == "44"):
+
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
 				self.opt_det.append({"name": "TS", "len":len_opt})
 				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
@@ -91,17 +103,23 @@ class Ip:
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
+
 			elif (self.opt[next_opt:next_opt+2] == "83"):
+
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
 				self.opt_det.append({"name": "LSR", "len":len_opt})
 				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
 				self.opt_det[nb_opt]["ip"] = []
+
 				for i in range(next_opt+6, next_opt+len_opt, 8):
 					self.opt_det[nb_opt]["time"].append(self.opt[i: i+8])
+
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
+
 			elif (self.opt[next_opt:next_opt+2] == "89"):
+
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
 				self.opt_det.append({"name": "SSR", "len":len_opt})
 				self.opt_det[nb_opt]["len"] = len_opt
@@ -114,10 +132,13 @@ class Ip:
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
+
 			elif (self.opt[next_opt:next_opt+2] == "01"):
+
 				self.opt_det.append({"name": "NOP", "len":1})
 				next_opt = next_opt+2
 				nb_opt = nb_opt + 1
+
 
 			else:
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
@@ -125,6 +146,7 @@ class Ip:
 				next_opt = next_opt+len_opt*2
 
 		self.nb_opt = nb_opt
+
 
 
 	# Getters
@@ -181,6 +203,7 @@ class Ip:
 
 	def get_nb_opt(self):
 		return self.nb_opt
+
 
 
 	# String

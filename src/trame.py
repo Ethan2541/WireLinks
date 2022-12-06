@@ -1,6 +1,3 @@
-import sys
-from exceptions import *
-
 from ethernet import *
 from ip import *
 from arp import *
@@ -11,9 +8,10 @@ from igmp import *
 from httpm import *
 
 class Trame:
-	"""Classe contenant la trame.
-	Chaque couche de la trame correspond à un objet.
+	"""Frame Object Class.
+	Each layer is associated to an OSI-layer.
 	"""
+
 	def __init__(self, iden, trame):
 		self.iden = iden
 		self.taille = len(trame)/2
@@ -22,13 +20,16 @@ class Trame:
 		if (self.ethernet.get_type_eth2() == "IPv4"):
 			self.ip = Ip(self.ethernet.get_data(), self.ethernet.get_type_eth2())
 
+			# IP
 			if (self.ip.get_data() != None):
 
+				# TCP
 				if (self.ip.get_proto2() == "TCP"):
 					self.transport = Tcp(self.ip.get_proto2(), self.ip.get_data())
 
 					if (self.transport.get_data() != None):
 
+						# HTTP within TCP segment
 						if (self.transport.get_appli() == "HTTP"):
 							self.http = Http(self.transport.get_data())
 
@@ -46,11 +47,14 @@ class Trame:
 						self.http = None
 						self.data = None
 
+
+				# UDP
 				elif (self.ip.get_proto2() == "UDP"):
 					self.transport = Udp(self.ip.get_proto2(), self.ip.get_data())
 
 					if (self.transport.get_data() != None):
 
+						# HTTP within UDP datagram
 						if (self.transport.get_appli() == "HTTP"):
 							self.http = Http(self.transport.get_data())
 
@@ -69,13 +73,17 @@ class Trame:
 						self.http = None
 						self.data = None
 
+
+				# ICMP
 				elif (self.ip.get_proto2() == "ICMP"):
 					self.transport = Icmp(self.ip.get_proto2(), self.ip.get_data())
 
-					if(self.transport.get_data() != None and self.transport.get_data() != ""):
+					if (self.transport.get_data() != None and self.transport.get_data() != ""):
 						self.data = self.transport.get_data()
 					self.http = None
 
+
+				# IGMP
 				elif (self.ip.get_proto2() == "IGMP"):
 					self.transport = Igmp(self.ip.get_proto2(), self.ip.get_data())
 
@@ -83,9 +91,9 @@ class Trame:
 						self.data = self.transport.get_data()
 					self.http = None
 					
+
 				else:
-					
-					type_error("Transport", self.ip.get_proto2(), self.iden)
+					# type_error("Transport", self.ip.get_proto2(), self.iden)
 					self.transport = None
 					self.http = None
 					self.data = None
@@ -96,25 +104,31 @@ class Trame:
 				self.data = None
 
 		elif (self.ethernet.get_type_eth2() == "ARP"):
+
 			self.ip = Arp(self.ethernet.get_data(), self.ethernet.get_type_eth2())
 			self.transport = None
 			self.http = None
 			self.data = None
+
+
 		elif (self.ethernet.get_type_eth2() == "RARP"):
 			self.ip = Arp(self.ethernet.get_data(), self.ethernet.get_type_eth2())
 			self.transport = None
 			self.http = None
 			self.data = None
 
+
 		else:
-			type_error("Network", self.ethernet.get_type_eth2(), self.iden)
+			# type_error("Network", self.ethernet.get_type_eth2(), self.iden)
 			self.ip = None
 			self.transport = None
 			self.http = None
 			self.data = None
 
+
 		if self.data != None:
 			self.data = "Data:\n\n" + self.data
+
 
 
 	# Getters
@@ -139,29 +153,7 @@ class Trame:
 	def get_data(self):
 		return self.data
 
-	def afficher_info_imp(self):
-		if (self.ip != None and self.ethernet.get_type_eth2() == "IPv4"):
-			chaine = f"{self.get_iden()} ({int(self.get_taille())}octets): {self.get_ip().get_src()}\
-------->{self.get_ip().get_dst()}\n"
 
-			for j in range(len(chaine)):
-				if(chaine[j] == ">"):
-					chaine += (j-5) * " " + self.get_ip().get_proto2()
-					break
-			print(chaine)
-		
-		elif (self.ip != None and self.ethernet.get_type_eth2() == "ARP"):
-			chaine = f"{self.get_iden()} ({int(self.get_taille())}octets): {self.get_ip().get_ip_src()}\
-------->{self.get_ip().get_ip_dst()}\n"
-			
-			for j in range(len(chaine)):
-				if(chaine[j] == ">"):
-					chaine += (j-5) * " " + "ARP"
-					break
-			print(chaine)
-
-		else:
-			print("Frame #",self.iden, "Unreadable")
 
 	def afficher_info_imp_gui(self):
 		fixedlen = 25
@@ -223,6 +215,7 @@ class Trame:
 			return f"Frame #{self.iden:04} Unreadable"
 
 		return chaine
+
 
 
 	def flow_graph(self):
@@ -303,6 +296,7 @@ class Trame:
 			chaine += f"| -------> {self.ip.get_ip_dst()}"
 
 		return chaine
+
 
 
 	# String

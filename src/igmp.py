@@ -1,12 +1,15 @@
 class Igmp:
-	def __init__(self, typ, trame):
+
+	def __init__(self, typ, frame):
+		# Parsing the default header fields
 		self.typ = typ
-		self.version = trame[0]
-		self.type_igmp = trame[1]
-		self.unused = trame[2:4]
-		self.chk = trame[4:8]
-		self.class_ip = f"{int(trame[8:10], 16)}.{int(trame[10:12], 16)}.{int(trame[12:14], 16)}.{int(trame[14:16], 16)}"
-		self.data = trame[16:]
+		self.version = frame[0]
+		self.type_igmp = frame[1]
+		self.unused = frame[2:4]
+		self.chk = frame[4:8]
+		self.class_ip = f"{int(frame[8:10], 16)}.{int(frame[10:12], 16)}.{int(frame[12:14], 16)}.{int(frame[14:16], 16)}"
+		self.data = frame[16:]
+
 
 
 	# Getters
@@ -30,6 +33,7 @@ class Igmp:
 
 	def get_data(self):
 		return self.data
+
 
 
 	# String

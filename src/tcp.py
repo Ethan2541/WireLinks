@@ -1,10 +1,16 @@
 class Tcp:
+
 	def __init__(self, typ, trame):
+		# Parser
 		self.typ = typ
+
 		self.port_src = trame[:4]
 		self.port_dst = trame[4:8]
+
 		self.seq_num = trame[8:16]
+
 		self.ack_num = trame[16:24]
+
 		self.thl = trame[24]
 		self.reserved = str(hex(int(trame[25:28], 16) >> 6))
 		self.urg = str((int(trame[25:28], 16) & 32) >> 5)
@@ -14,37 +20,54 @@ class Tcp:
 		self.syn = str((int(trame[25:28], 16) & 2) >> 1)
 		self.fin = str(int(trame[25:28], 16) & 1)
 		self.window = trame[28:32]
+
 		self.chk = trame[32:36]
 		self.up = trame[36:40]
+
+		# Options
 		opt_length = int(self.thl, 16)*8 - 40
 		self.opt = trame[40:40+opt_length]
+		
 		if (trame[40+opt_length:] != ""):
 			self.data = trame[40+opt_length:]
 		else:
 			self.data = None
 
+
+		# Application according to the source or destination port
 		if (self.port_src=="0050" or self.port_dst=="0050"):
 			self.appli = "HTTP"
+
 		elif (self.port_src=="0019" or self.port_dst=="00019"):
 			self.appli = "SMTP"
+
 		elif (self.port_src=="008F" or self.port_dst=="0008F"):
 			self.appli = "IMAP"
+
 		elif (self.port_src=="006E" or self.port_dst=="006E"):
 			self.appli = "POP"
+
 		elif (self.port_src=="0035" or self.port_dst=="0035"):
 			self.appli = "DNS"
+
 		elif (self.port_src=="01BB" or self.port_dst=="01BB"):
 			self.appli = "HTTPS"
+
 		elif (self.port_src=="0043" or self.port_dst=="0043"):
 			self.appli = "DHCP"
+
 		elif (self.port_src=="0016" or self.port_dst=="0016"):
 			self.appli = "SSH"
+
 		elif (self.port_src=="0D3D" or self.port_dst=="0D3D"):
 			self.appli = "RDP"
+
 		elif (self.port_src=="0014" or self.port_dst=="0014" or self.port_src=="0015" or self.port_dst=="0015"):
 			self.appli = "FTP"
+
 		else:
 			self.appli = "Unknown"
+
 
 
 	# Getters
@@ -104,6 +127,7 @@ class Tcp:
 
 	def get_appli(self):
 		return self.appli
+
 
 
 	# String

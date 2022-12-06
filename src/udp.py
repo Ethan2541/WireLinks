@@ -1,37 +1,54 @@
 class Udp:
-	def __init__(self, typ, trame):
+	def __init__(self, typ, frame):
+		# Parser
 		self.typ = typ
-		self.port_src = trame[:4]
-		self.port_dst = trame[4:8]
-		self.length = trame[8:12]
-		self.chk = trame[12:16]
-		self.data = trame[16:]
+
+		self.port_src = frame[:4]
+		self.port_dst = frame[4:8]
+
+		self.length = frame[8:12]
+		self.chk = frame[12:16]
+
+		self.data = frame[16:]
 
 		if (self.data == ""):
 			self.data = None
-			
+		
+
+		# Application according to the source or destination port
 		if (self.port_src=="0050" or self.port_dst=="0050"):
 			self.appli = "HTTP"
+
 		elif (self.port_src=="0019" or self.port_dst=="00019"):
 			self.appli = "SMTP"
+
 		elif (self.port_src=="008F" or self.port_dst=="0008F"):
 			self.appli = "IMAP"
+
 		elif (self.port_src=="006E" or self.port_dst=="006E"):
 			self.appli = "POP"
+
 		elif (self.port_src=="0035" or self.port_dst=="0035"):
 			self.appli = "DNS"
+
 		elif (self.port_src=="01BB" or self.port_dst=="01BB"):
 			self.appli = "HTTPS"
+
 		elif (self.port_src=="0043" or self.port_dst=="0043"):
 			self.appli = "DHCP"
+
 		elif (self.port_src=="0016" or self.port_dst=="0016"):
 			self.appli = "SSH"
+
 		elif (self.port_src=="0D3D" or self.port_dst=="0D3D"):
 			self.appli = "RDP"
+
 		elif (self.port_src=="0014" or self.port_dst=="0014" or self.port_src=="0015" or self.port_dst=="0015"):
 			self.appli = "FTP"
+
 		else:
 			self.appli = "Unknown"
+
 
 
 	# Getters
@@ -55,6 +72,7 @@ class Udp:
 
 	def get_appli(self):
 		return self.appli
+
 
 
 	# String

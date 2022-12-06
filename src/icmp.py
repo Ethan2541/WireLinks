@@ -1,48 +1,52 @@
-import sys
-
 from tcp import *
 from udp import *
-
-sys.path.append("../network")
 from ip import *
 
 class Icmp:
-	def __init__(self, typ, trame):
+
+	def __init__(self, typ, frame):
+		# Parsing the default header fields
 		self.typ = typ
-		self.typ_icmp = trame[:2]
-		self.code = trame[2:4]
-		self.chk = trame[4:8]
-		self.data = trame[8:]
+		self.typ_icmp = frame[:2]
+		self.code = frame[2:4]
+		self.chk = frame[4:8]
+		self.data = frame[8:]
 		
+		# Different Cases
 		if ((self.typ_icmp == "08" or self.typ_icmp == "00") and self.code == "00"):
-			self.id = trame[8:12]
-			self.seq_num = trame[12:16]
-			self.options = trame[16:]
+			self.id = frame[8:12]
+			self.seq_num = frame[12:16]
+			self.options = frame[16:]
+
 
 		elif ((self.typ_icmp == "11" or self.typ_icmp == "12") and self.code == "00"):
-			self.id = trame[8:12]
-			self.seq_num = trame[12:16]
-			self.subnet_mask = trame[16:24]
+			self.id = frame[8:12]
+			self.seq_num = frame[12:16]
+			self.subnet_mask = frame[16:24]
+
 
 		elif ((self.typ_icmp == "0D" or self.typ_icmp == "0E") and self.code == "00"):
-			self.id = trame[8:12]
-			self.seq_num = trame[12:16]
-			self.orig_timestap = trame[16:24]
-			self.rec_timestap = trame[24:32]
-			self.tran_timestap = trame[32:40]
+			self.id = frame[8:12]
+			self.seq_num = frame[12:16]
+			self.orig_timestap = frame[16:24]
+			self.rec_timestap = frame[24:32]
+			self.tran_timestap = frame[32:40]
+
 
 		elif (self.typ_icmp == "03"):
-			self.unused = trame[8:16]
-			self.ip = Ip(trame[16:], "IPv4")
+			self.unused = frame[8:16]
+			self.ip = Ip(frame[16:], "IPv4")
 
 			if (self.ip.get_proto2() == "TCP"):
 				self.transport = Tcp(self.ip.get_data())
+
 			if (self.ip.get_proto2() == "UDP"):
 				self.transport = Udp(self.ip.get_data())
 
+
 		elif (self.typ_icmp == "0B"):
-			self.unused = trame[8:16]
-			self.ip = Ip(trame[16:], "IPv4")
+			self.unused = frame[8:16]
+			self.ip = Ip(frame[16:], "IPv4")
 
 			if (self.ip.get_proto2() == "TCP"):
 				self.transport = Tcp(self.ip.get_data())
@@ -52,23 +56,32 @@ class Icmp:
 		self.determine_type()
 
 
+
 	def determine_type(self):
-		if(self.typ_icmp == "08"):
+		if (self.typ_icmp == "08"):
 			self.typ_icmp2 = "Echo"
-		elif(self.typ_icmp == "00"):
+
+		elif (self.typ_icmp == "00"):
 			self.typ_icmp2 = "Echo Reply"
-		elif(self.typ_icmp == "11"):
+
+		elif (self.typ_icmp == "11"):
 			self.typ_icmp2 = "Address Mask Request"
-		elif(self.typ_icmp == "12"):
+
+		elif (self.typ_icmp == "12"):
 			self.typ_icmp2 = "Address Mask Reply"
-		elif(self.typ_icmp == "0D"):
+
+		elif (self.typ_icmp == "0D"):
 			self.typ_icmp2 = "Timestamp"
-		elif(self.typ_icmp == "0E"):
+
+		elif (self.typ_icmp == "0E"):
 			self.typ_icmp2 = "Timestamp Reply"
-		elif(self.typ_icmp == "03"):
+
+		elif (self.typ_icmp == "03"):
 			self.typ_icmp2 = "Destination Unreachable"
-		elif(self.typ_icmp == "0B"):
+
+		elif (self.typ_icmp == "0B"):
 			self.typ_icmp2 = "Time Exceeded"
+
 
 
 	# Getters
@@ -91,54 +104,35 @@ class Icmp:
 		return self.data
 
 	def get_id(self):
-		if(self.id != None):
-			return self.id
-		return None
+		return self.id
 
 	def get_seq_num(self):
-		if(self.seq_num != None):
-			return self.seq_num
-		return None
+		return self.seq_num
 
 	def get_options(self):
-		if(self.options != None):
-			return self.options
-		return None
+		return self.options
 
 	def get_subnet_mask(self):
-		if(self.subnet_mask != None):
-			return self.subnet_mask
-		return None
+		return self.subnet_mask
 
 	def get_orig_timestap(self):
-		if(self.orig_timestap != None):
-			return self.orig_timestap
-		return None
+		return self.orig_timestap
 
 	def get_rec_timestap(self):
-		if(self.rec_timestap != None):
-			return self.rec_timestap
-		return None
+		return self.rec_timestap
 
 	def get_tran_timestap(self):
-		if(self.tran_timestap != None):
-			return self.tran_timestap
-		return None
+		return self.tran_timestap
 
 	def get_unused(self):
-		if(self.unused != None):
-			return self.unused
-		return None
+		return self.unused
 
 	def get_ip(self):
-		if(self.ip != None):
-			return self.ip
-		return None
+		return self.ip
 
 	def get_transport(self):
-		if(self.transport != None):
-			return self.transport
-		return None
+		self.transport
+
 
 
 	# String

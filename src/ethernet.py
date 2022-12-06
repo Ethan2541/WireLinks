@@ -1,14 +1,14 @@
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 class Ethernet:
-	def __init__(self, trame):
-		self.dst = f"{trame[:2]}:{trame[2:4]}:{trame[4:6]}:{trame[6:8]}:{trame[8:10]}:{trame[10:12]}"
-		self.src = f"{trame[12:14]}:{trame[14:16]}:{trame[16:18]}:{trame[18:20]}:{trame[20:22]}:{trame[22:24]}"
-		self.type_eth = trame[24:28]
-		self.data = trame[28:]
 
+	def __init__(self, frame):
+		
+		# Parser
+		self.dst = f"{frame[:2]}:{frame[2:4]}:{frame[4:6]}:{frame[6:8]}:{frame[8:10]}:{frame[10:12]}"
+		self.src = f"{frame[12:14]}:{frame[14:16]}:{frame[16:18]}:{frame[18:20]}:{frame[20:22]}:{frame[22:24]}"
+		self.type_eth = frame[24:28]
+		self.data = frame[28:]
+
+		# Type
 		if (self.type_eth == "0800"):
 			self.type_eth2 = "IPv4"
 		elif (self.type_eth == "86DD"):
