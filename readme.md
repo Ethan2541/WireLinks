@@ -65,5 +65,5 @@ Then you would give the value that you are searching for.
 	-For port numbers, you have to type them in decimal like this: `80`
 	-For protocols, you can type their name like: `tcp` or their hexadecimal code like: `0x06`
 	
-	Here are the supported protocoles by our filters:
+Here are the supported protocoles by our filters:
 		`IPv4`, `IPv6`, `ARP`, `ICMP`, `TCP`, `UDP`, `IGMP`, `EGP`, `IGP`, `XTP"`, "RSVP`,`HTTP`, `HTTPS`, "DNS`, `DHCP`, `SMTP`, `IMAP`, `POP`, `SSH`, `RDP`, `FTP`
