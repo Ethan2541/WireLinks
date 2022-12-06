@@ -1,13 +1,13 @@
 run:
 	python src/main.py
 
-setup_mac:
+setup:
+	- brew install pip
+	- brew install python3-tk
+	- sudo apt-get pip
+	- sudo apt-get install python3-tk
 	pip install -r requirements.txt
-	brew install python-tk
-
-setup_linux:
-	pip install -r requirements.txt
-	sudo apt-get install python-tk
 
 clean:
-	rm -f src/__pycache__
+	- rmdir -f src/__pycache__
+	- rmdir -f src/__pycache__
