@@ -272,8 +272,15 @@ class Trame:
 
 			elif (self.transport != None and self.transport.get_typ()=="ICMP"):
 				chaine += " |"
-				chaine += f"ICMP Type={self.transport.get_typ_icmp2()}"
-				chaine += "| "
+				chaine += f"ICMP {self.transport.get_typ_icmp2()}"
+				if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
+					chaine += f" (ping)  "
+					if(self.transport.get_typ_icmp() == "08"):
+						chaine += "request "
+					else:
+						chaine += "reply "
+					chaine += "id=0x{self.transport.get_id()}   seq={self.transport.get_seq_num()}  ttl={self.ip.get_ttl()}"
+				chaine += "  | "
 
 			elif (self.transport != None and self.transport.get_typ()=="IGMP"):
 				chaine += " |"
