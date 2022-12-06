@@ -1,4 +1,4 @@
-**Reading and Writing Tools**
+##Reading and Writing Tools
 ---
 
 The module ReadingTools allows to read .txt files having frames formatted as follows :
@@ -9,7 +9,7 @@ The module WritingTools allows to output .pdf files that look similar to WireSha
 It also leaves empty space rather than displaying frames with unsupported protocols.
 
 
-**Protocols**
+##Protocols
 ---
 
 Here is the list of the supported protocols :
@@ -22,7 +22,7 @@ These protocols are implemented as classes, in eponym files. The latter all have
 and str representation.
 
 
-**Other files**
+##Other files
 ---
 
 The file "trame.py" groups every protocol object to build a frame. It also implements several ways to
