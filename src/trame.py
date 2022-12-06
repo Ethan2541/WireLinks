@@ -182,7 +182,7 @@ class Trame:
 						if(self.transport.get_rst() == "1"):
 							chaine += "RST "
 
-						chaine += "Seq={} Ack={}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
+						chaine += "Seq=0x{} Ack=0x{}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
 
 					if (self.http != None):
 						chaine += f"  {self.http.get_version() } "
@@ -251,7 +251,7 @@ class Trame:
 					chaine += " URG "
 				if(self.transport.get_rst() == "1"):
 					chaine += " RST "
-				chaine += f" Seq={int(self.transport.get_seq_num(), 16)} Ack={int(self.transport.get_ack_num(), 16)}| "
+				chaine += f" Seq=0x{int(self.transport.get_seq_num(), 16)} Ack=0x{int(self.transport.get_ack_num(), 16)}| "
 
 			elif (self.transport != None and self.transport.get_typ() == "UDP"):
 				chaine += " |"
