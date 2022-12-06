@@ -13,10 +13,10 @@ Protocols
 ---
 
 Here is the list of the supported protocols :
-	- Link-layer : Ethernet II (no preamble and no trailer)
-	- Network-layer : IPv4, ARP, ICMP, IGMP
-	- Transport-layer : TCP, UDP
-	- Application-layer : HTTP
+	* Link-layer : Ethernet II (no preamble and no trailer)
+	* Network-layer : IPv4, ARP, ICMP, IGMP
+	* Transport-layer : TCP, UDP
+	* Application-layer : HTTP
 
 These protocols are implemented as classes, in eponym files. The latter all have a parser, getters
 and str representation.
