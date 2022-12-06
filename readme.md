@@ -59,13 +59,15 @@ Here is all of them:
 
 Then you have to give the type of operation you want: `==` or `<>` or `!=` (`<>` and `!=` are tha same)
 
-Then you would give the value that you are searching for.
-Value               				  | Format
--------------------------------------- --------------------------------------
-IP address          				  | 192.168.0.0
-MAC address         				  | FF:FF:FF:FF:FF:FF
-Port number        					  | decimal (ex: 80)
-Protocol            				  | name(ex: TCP) or hex number(ex: 0x06)
+Then you would give the value that you are searching for
+
+
+Value        | Format
+------------- --------------------------------------
+IP address   | 192.168.0.0
+MAC address  | FF:FF:FF:FF:FF:FF
+Port number  | decimal (ex: 80)
+Protocol     | name(ex: TCP) or hex number(ex: 0x06)
 
 Here are the supported protocoles by our filters:
 		`IPv4`, `IPv6`, `ARP`, `ICMP`, `TCP`, `UDP`, `IGMP`, `EGP`, `IGP`, `XTP`, `RSVP`,`HTTP`, `HTTPS`, "DNS`, `DHCP`, `SMTP`, `IMAP`, `POP`, `SSH`, `RDP`, `FTP`
