@@ -3,12 +3,24 @@ class Igmp:
 	def __init__(self, typ, frame):
 		# Parsing the default header fields
 		self.typ = typ
-		self.version = frame[0]
-		self.type_igmp = frame[1]
+		self.type_igmp = frame[:2]
 		self.unused = frame[2:4]
 		self.chk = frame[4:8]
 		self.class_ip = f"{int(frame[8:10], 16)}.{int(frame[10:12], 16)}.{int(frame[12:14], 16)}.{int(frame[14:16], 16)}"
 		self.data = frame[16:]
+
+		if(self.type_igmp == "11"):
+			self.type_igmp2 = "Request"
+		elif(self.type_igmp == "22"):
+			self.type_igmp2 = "Rapport v3"
+		elif(self.type_igmp == "12"):
+			self.type_igmp2 = "Rapport v1"
+		elif(self.type_igmp == "16"):
+			self.type_igmp2 = "Rapport v2"
+		elif(self.type_igmp == "17"):
+			self.type_igmp2 = "Exit v2"
+		else:
+			self.type_igmp2 = "Inconnue"
 
 
 
@@ -21,6 +33,9 @@ class Igmp:
 
 	def get_type_igmp(self):
 		return self.type_igmp
+	
+	def get_type_igmp2(self):
+		return self.type_igmp2
 
 	def get_unused(self):
 		return self.unused
