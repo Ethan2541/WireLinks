@@ -1,4 +1,4 @@
-Reading and Writing Tools :
+*Reading and Writing Tools*
 	ReadingTools
 	WritingTools
 
@@ -10,6 +10,7 @@ The module WritingTools allows to output .pdf files that look similar to WireSha
 It also leaves empty space rather than displaying frames with unsupported protocols.
 
 
+*Protocols*
 Here is the list of the supported protocols :
 	- Link-layer : Ethernet II (no preamble and no trailer)
 	- Network-layer : IPv4, ARP, ICMP, IGMP
@@ -20,6 +21,7 @@ These protocols are implemented as classes, in eponym files. The latter all have
 and str representation.
 
 
+*Other files*
 The file "trame.py" groups every protocol object to build a frame. It also implements several ways to
 display a single frame.
 
