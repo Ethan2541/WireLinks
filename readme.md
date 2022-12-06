@@ -69,26 +69,26 @@ Then you would give the value that you are searching for
 | Protocol     | name(ex: TCP) or hex number(ex: 0x06)	|
 
 Here are the supported protocoles by our filters:
-	-`IPv4`
-	-`IPv6`
-	-`ARP`
-	-`ICMP`
-	-`TCP`
-	-`UDP`
-	-`IGMP`
-	-`EGP`
-	-`IGP`
-	-`XTP`
-	-`RSVP`
-	-`HTTP`
-	-`HTTPS`
-	-`DNS`
-	-`DHCP`
-	-`SMTP`
-	-`IMAP`
-	-`POP`
-	-`SSH`
-	-`RDP`
-	-`FTP`
+⋅⋅⋅-`IPv4`⋅⋅
+⋅⋅⋅-`IPv6`⋅⋅
+⋅⋅⋅-`ARP`⋅⋅
+⋅⋅⋅-`ICMP`⋅⋅
+⋅⋅⋅-`TCP`⋅⋅
+⋅⋅⋅-`UDP`⋅⋅
+⋅⋅⋅-`IGMP`⋅⋅
+⋅⋅⋅-`EGP`⋅⋅
+⋅⋅⋅-`IGP`⋅⋅
+⋅⋅⋅-`XTP`⋅⋅
+⋅⋅⋅-`RSVP`⋅⋅
+⋅⋅⋅-`HTTP`⋅⋅
+⋅⋅⋅-`HTTPS`⋅⋅
+⋅⋅⋅-`DNS`⋅⋅
+⋅⋅⋅-`DHCP`⋅⋅
+⋅⋅⋅-`SMTP`⋅⋅
+⋅⋅⋅-`IMAP`⋅⋅
+⋅⋅⋅-`POP`⋅⋅
+⋅⋅⋅-`SSH`⋅⋅
+⋅⋅⋅-`RDP`⋅⋅
+⋅⋅⋅-`FTP`⋅⋅
 
 Finally you have to give your (j'ai pas de mots). You can use `&&` for an and (..) or you can use `||` for an or (..)
