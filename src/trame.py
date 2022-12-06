@@ -161,29 +161,35 @@ class Trame:
 		if (self.ethernet != None):
 			chaine += ("   {:<4d}" + (8 - len(str(self.iden))) * " " + "{:<20s}" + (fixedlen - len(self.ethernet.get_src())) * " " + "{:<20s}" + (fixedlen - len(self.ethernet.get_dst())) * " ").format(self.iden, self.ethernet.get_src(), self.ethernet.get_dst())
 			
+			# IPv4
 			if (self.ip != None and self.ethernet.get_type_eth2() == "IPv4"):
 				chaine += ("{:<15s}" + (fixedlen - len(self.ip.get_src())) * " " + "{:<15s}" + (fixedlen - len(self.ip.get_dst())) * " ").format(self.ip.get_src(), self.ip.get_dst())
 				
+				# TCP, UDP
 				if (self.transport != None and self.ip.get_proto2() == "TCP" or self.ip.get_proto2() == "UDP"):
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " " + "{:<8d}" + (fixedlen - len(str(int(self.transport.get_port_src(), 16)))) * " " + "{:<8d}" + (fixedlen - len(str(int(self.transport.get_port_dst(), 16)))) * " ").format(self.ip.get_proto2(), int(self.transport.get_port_src(), 16), int(self.transport.get_port_dst(), 16))
 					chaine += "Len={} ".format(int(self.get_taille()))
 
+					# TCP-specific fields
 					if (self.ip.get_proto2() == "TCP"):
-						if(self.transport.get_syn() == "1"):
+
+						# Flags
+						if (self.transport.get_syn() == "1"):
 							chaine += "SYN "
-						if(self.transport.get_ack() == "1"):
+						if (self.transport.get_ack() == "1"):
 							chaine += "ACK "
-						if(self.transport.get_fin() == "1"):
+						if (self.transport.get_fin() == "1"):
 							chaine += "FIN "
-						if(self.transport.get_psh() == "1"):
+						if (self.transport.get_psh() == "1"):
 							chaine += "PSH "
-						if(self.transport.get_urg() == "1"):
+						if (self.transport.get_urg() == "1"):
 							chaine += "URG "
-						if(self.transport.get_rst() == "1"):
+						if (self.transport.get_rst() == "1"):
 							chaine += "RST "
 
 						chaine += "Seq=0x{} Ack=0x{}".format(self.transport.get_seq_num(), self.transport.get_ack_num())
 
+					# HTTP
 					if (self.http != None):
 						chaine += f"  {self.http.get_version() } "
 
@@ -194,6 +200,7 @@ class Trame:
 							chaine += f"{self.http.get_method()} {self.http.get_url()}"
 
 
+				# ICMP
 				elif (self.transport != None and self.transport.get_typ()=="ICMP"):
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
 					chaine += (2 * fixedlen + 15) * " "
@@ -201,6 +208,7 @@ class Trame:
 
 					chaine += f"   {self.transport.get_typ_icmp2()}   "
 
+					# ICMP Types
 					if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00" or self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12" or self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
 						if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
 							chaine += " (ping)"
@@ -214,6 +222,7 @@ class Trame:
 
 						chaine += f"   ID=0x{self.transport.get_id()}   Seq=0x{self.transport.get_seq_num()}  TTL={self.ip.get_ttl()}"
 
+				# IGMP
 				elif (self.transport != None and self.transport.get_typ()=="IGMP"):
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
 					chaine += (2 * fixedlen + 15) * " "
@@ -221,11 +230,14 @@ class Trame:
 
 					chaine += f"  IGMP {self.transport.get_type_igmp2()}  Address: {self.transport.get_class_ip()}"
 
+
 				else:
 					chaine += ("{:<10s}" + (fixedlen - len(self.ip.get_proto2())) * " ").format(self.ip.get_proto2())
 					chaine += (2 * fixedlen + 15) * " "
 					chaine += "Len={}".format(int(self.get_taille()))
 
+
+			# ARP, RARP
 			elif (self.ip != None and self.ethernet.get_type_eth2() == "ARP" or self.ethernet.get_type_eth2() == "RARP"):
 				chaine += ("{:<15s}" + (fixedlen - len(self.ip.get_ip_src())) * " " + "{:<15s}" + (fixedlen - len(self.ip.get_ip_dst())) * " " + "{:<10s}" + (fixedlen - len(self.ethernet.get_type_eth2())) * " ").format(self.ip.get_ip_src(), self.ip.get_ip_dst(), self.ethernet.get_type_eth2())
 				chaine += (2 * fixedlen + 15) * " "
@@ -250,6 +262,7 @@ class Trame:
 		if (self.ip != None and self.ip.typ=="IPv4"):
 			chaine = f"{self.iden}  {self.ip.get_src()} -------"
 			
+			# TCP
 			if (self.transport != None and self.transport.get_typ() == "TCP"):
 				chaine += " |"
 				if (self.http != None):
@@ -266,20 +279,23 @@ class Trame:
 
 				chaine += f"{str(int(self.transport.get_port_src(), 16))} -> {str(int(self.transport.get_port_dst(), 16))} Len={str(int(self.transport.get_thl(), 16) * 4)}"
 				
-				if(self.transport.get_syn() == "1"):
+				# TCP Flags
+				if (self.transport.get_syn() == "1"):
 					chaine += " SYN "
-				if(self.transport.get_ack() == "1"):
+				if (self.transport.get_ack() == "1"):
 					chaine += " ACK "
-				if(self.transport.get_fin() == "1"):
+				if (self.transport.get_fin() == "1"):
 					chaine += " FIN "
-				if(self.transport.get_psh() == "1"):
+				if (self.transport.get_psh() == "1"):
 					chaine += " PSH "
-				if(self.transport.get_urg() == "1"):
+				if (self.transport.get_urg() == "1"):
 					chaine += " URG "
-				if(self.transport.get_rst() == "1"):
+				if (self.transport.get_rst() == "1"):
 					chaine += " RST "
 				chaine += f" Seq=0x{int(self.transport.get_seq_num(), 16)} Ack=0x{int(self.transport.get_ack_num(), 16)}| "
 
+
+			# UDP
 			elif (self.transport != None and self.transport.get_typ() == "UDP"):
 				chaine += " |"
 
@@ -294,13 +310,17 @@ class Trame:
 
 				else:
 					chaine += "UDP "
+
 				chaine += f"{str(int(self.transport.get_port_src(), 16))} -> {str(int(self.transport.get_port_dst(), 16))} "
 				chaine += f"Len={str(int(self.transport.get_length(), 16))}| "
 
+
+			# ICMP
 			elif (self.transport != None and self.transport.get_typ()=="ICMP"):
 				chaine += " |"
 				chaine += f"ICMP {self.transport.get_typ_icmp2()}"
 				
+				# ICMP Types
 				if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00" or self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12" or self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
 					
 					if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
@@ -316,6 +336,8 @@ class Trame:
 
 				chaine += "| "
 
+
+			# IGMP
 			elif (self.transport != None and self.transport.get_typ()=="IGMP"):
 				chaine += " |"
 				chaine += f"IGMP {self.transport.get_type_igmp2()} Address: {self.transport.get_class_ip()}"
@@ -323,11 +345,14 @@ class Trame:
 			
 			chaine += f"-------> {self.ip.get_dst()}"
 
+
+		# ARP
 		elif (self.ip != None and self.ip.get_typ() == "ARP"):
 			chaine += f"{self.iden}  {self.ip.get_ip_src()} -------"
 			chaine += " |"
 			chaine += f"ARP Type={self.ip.get_op2()}"
 
+			# ARP Types
 			if (self.ip.get_op() == "0001"):
 				chaine += f" Who has {self.ip.get_ip_dst()}? Tell {self.ip.get_ip_src()}"
 
