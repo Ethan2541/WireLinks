@@ -5,7 +5,8 @@ Python version later than 3.10.5
 
 SETUP
 
-In order to install WireLinks, you simply need to type : make setup in a terminal opened in the
+In order to install WireLinks, you simply need to type : make setup_mac if you are running on macosx
+or setup_linux if you are on a debian like distribution in a terminal opened in the
 WireLinks parent folder.
 
 
