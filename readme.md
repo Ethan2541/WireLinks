@@ -70,26 +70,26 @@ Then you would give the value that you are searching for
 | Protocol     | name(ex: TCP) or hex number(ex: 0x06)	|
 
 Here are the supported protocols by our filters:
--`IPv4`
--`IPv6`
--`ARP`
--`ICMP`
--`TCP`
--`UDP`
--`IGMP`
--`EGP`
--`IGP`
--`XTP`
--`RSVP`
--`HTTP`
--`HTTPS`
--`DNS`
--`DHCP`
--`SMTP`
--`IMAP`
--`POP`
--`SSH`
--`RDP`
--`FTP`
+- `IPv4`
+- `IPv6`
+- `ARP`
+- `ICMP`
+- `TCP`
+- `UDP`
+- `IGMP`
+- `EGP`
+- `IGP`
+- `XTP`
+- `RSVP`
+- `HTTP`
+- `HTTPS`
+- `DNS`
+- `DHCP`
+- `SMTP`
+- `IMAP`
+- `POP`
+- `SSH`
+- `RDP`
+- `FTP`
 
 Finally, you can provide a binary operator among: `&&` (and) and `||` (or) in order to use several filters at once.
