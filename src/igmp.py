@@ -9,27 +9,28 @@ class Igmp:
 		self.class_ip = f"{int(frame[8:10], 16)}.{int(frame[10:12], 16)}.{int(frame[12:14], 16)}.{int(frame[14:16], 16)}"
 		self.data = frame[16:]
 
-		if(self.type_igmp == "11"):
+		if (self.type_igmp == "11"):
 			self.type_igmp2 = "Request"
-		elif(self.type_igmp == "22"):
-			self.type_igmp2 = "Rapport v3"
-		elif(self.type_igmp == "12"):
-			self.type_igmp2 = "Rapport v1"
-		elif(self.type_igmp == "16"):
-			self.type_igmp2 = "Rapport v2"
-		elif(self.type_igmp == "17"):
+
+		elif (self.type_igmp == "22"):
+			self.type_igmp2 = "Report v3"
+		elif (self.type_igmp == "12"):
+
+			self.type_igmp2 = "Report v1"
+		elif (self.type_igmp == "16"):
+
+			self.type_igmp2 = "Report v2"
+		elif (self.type_igmp == "17"):
+
 			self.type_igmp2 = "Exit v2"
 		else:
-			self.type_igmp2 = "Inconnue"
+			self.type_igmp2 = "Unknown"
 
 
 
 	# Getters
 	def get_typ(self):
 		return self.typ
-
-	def get_version(self):
-		return self.version
 
 	def get_type_igmp(self):
 		return self.type_igmp
@@ -54,7 +55,6 @@ class Igmp:
 	# String
 	def __str__(self):
 		return f"{self.typ}:\
-		\n\tIGMP Version: {self.version}\
 		\n\tIGMP Type: {self.type_igmp}\
 		\n\tChecksum: 0x{self.chk}\
 		\n\tGroup Address: {self.class_ip}"

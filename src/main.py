@@ -131,7 +131,7 @@ def is_invalid_filename(filename):
 			return True
 
 def save_command():
-	answer = mb.askyesno("Confirmation", "Do you want to save the analysis of the frames ?")
+	answer = mb.askyesno("Confirmation", "Do you want to export these frames as a flow graph ?")
 
 	if answer:
 		if frames_for_pdf != []:
@@ -527,7 +527,7 @@ def get_selection():
 	i = content_frames.curselection()[0]
 
 	if (i != 0):
-		return TrameList.get_trame(i)
+		return TrameList.get_trame(int(content_frames.get(i)[:10]))
 	else:
 		return []			
 

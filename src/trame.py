@@ -300,21 +300,25 @@ class Trame:
 			elif (self.transport != None and self.transport.get_typ()=="ICMP"):
 				chaine += " |"
 				chaine += f"ICMP {self.transport.get_typ_icmp2()}"
-				if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00" or self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12" or self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
-					if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
-						chaine += " (ping)  "
-					elif(self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12"):
-							chaine += " Mask={self.transport.get_subnet_mask()}"
-					elif(self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
-							chaine += " Original TimeStap={self.transport.get_orig_timestap()}  Received TimeStap={self.transport.get_recv_timestap()}\
+				
+				if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00" or self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12" or self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
+					
+					if (self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
+						chaine += " (ping)"
+					
+					elif (self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12"):
+							chaine += f" Mask={self.transport.get_subnet_mask()}"
+					
+					elif (self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
+							chaine += f" Original TimeStamp={self.transport.get_orig_timestamp()}  Received TimeStamp={self.transport.get_recv_timestamp()}\
 									Transport Timstamp={self.transport.get_tran_timestamsp()}"
-					chaine += "id=0x{self.transport.get_id()}   seq={self.transport.get_seq_num()}  ttl={self.ip.get_ttl()}"
+					chaine += f" ID=0x{self.transport.get_id()}   Seq={self.transport.get_seq_num()}  TTL={self.ip.get_ttl()}"
 
-				chaine += "  | "
+				chaine += "| "
 
 			elif (self.transport != None and self.transport.get_typ()=="IGMP"):
 				chaine += " |"
-				chaine += f"IGMP"
+				chaine += f"IGMP {self.transport.get_type_igmp2()} Address: {self.transport.get_class_ip()}"
 				chaine += "| "
 			
 			chaine += f"-------> {self.ip.get_dst()}"
