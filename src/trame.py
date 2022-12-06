@@ -103,6 +103,8 @@ class Trame:
 				self.http = None
 				self.data = None
 
+
+		# ARP
 		elif (self.ethernet.get_type_eth2() == "ARP"):
 
 			self.ip = Arp(self.ethernet.get_data(), self.ethernet.get_type_eth2())
@@ -111,6 +113,7 @@ class Trame:
 			self.data = None
 
 
+		# RARP
 		elif (self.ethernet.get_type_eth2() == "RARP"):
 			self.ip = Arp(self.ethernet.get_data(), self.ethernet.get_type_eth2())
 			self.transport = None
