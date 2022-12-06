@@ -12,7 +12,7 @@ or setup_linux if you are on a debian like distribution in a terminal opened in 
 WireLinks parent folder.
 
 
-How to run the program ?
+How to run WireLinks ?
 ---
 
 The program is launched after typing : make run in a terminal opened in the WireLinks parent folder.
