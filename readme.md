@@ -13,11 +13,11 @@ These modules are available in the "src" folder along the other modules.
 Source Files
 ---
 
-The file "trame.py" groups every protocol object to build a frame. It also implements several ways to display a single frame.
+The file `trame.py` groups every protocol object to build a frame. It also implements several ways to display a single frame.
 
-The file "liste_trames.py" holds the frames list of the tracefile that is being analyzed. It also implements filters handling.
+The file `liste_trames.py` holds the frames list of the tracefile that is being analyzed. It also implements filters handling.
 
-Finally, the file "main.py" implements the GUI and runs the program.
+Finally, the file `main.py` implements the GUI and runs the program.
 
 
 Protocols
