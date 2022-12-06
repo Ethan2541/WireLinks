@@ -10,6 +10,16 @@ The module WritingTools allows to output .pdf files, available in the "output" f
 These modules are available in the "src" folder along the other modules.
 
 
+Source Files
+---
+
+The file "trame.py" groups every protocol object to build a frame. It also implements several ways to display a single frame.
+
+The file "liste_trames.py" holds the frames list of the tracefile that is being analyzed. It also implements filters handling.
+
+Finally, the file "main.py" implements the GUI and runs the program.
+
+
 Protocols
 ---
 
@@ -20,16 +30,6 @@ Here is the list of the supported protocols:
 - Application-layer : HTTP
 
 These protocols are implemented as classes, in eponym files. The latter all have a parser, getters and str representation.
-
-
-Source Files
----
-
-The file "trame.py" groups every protocol object to build a frame. It also implements several ways to display a single frame.
-
-The file "liste_trames.py" holds the frames list of the tracefile that is being analyzed. It also implements filters handling.
-
-Finally, the file "main.py" implements the GUI and runs the program.
 
 
 Samples
