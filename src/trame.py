@@ -273,13 +273,16 @@ class Trame:
 			elif (self.transport != None and self.transport.get_typ()=="ICMP"):
 				chaine += " |"
 				chaine += f"ICMP {self.transport.get_typ_icmp2()}"
-				if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
-					chaine += f" (ping)  "
-					if(self.transport.get_typ_icmp() == "08"):
-						chaine += "request "
-					else:
-						chaine += "reply "
+				if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00" or self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12" or self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
+					if(self.transport.get_typ_icmp() == "08" or self.transport.get_typ_icmp() == "00"):
+						chaine += " (ping)  "
+					elif(self.transport.get_typ_icmp() == "11" or self.transport.get_typ_icmp() == "12"):
+							chaine += " Mask={self.transport.get_subnet_mask()}"
+					elif(self.transport.get_typ_icmp() == "0D" or self.transport.get_typ_icmp() == "0E"):
+							chaine += " Original TimeStap={self.transport.get_orig_timestap()}  Received TimeStap={self.transport.get_recv_timestap()}\
+									Transport Timstap={self.transport.get_tran_timestap()}"
 					chaine += "id=0x{self.transport.get_id()}   seq={self.transport.get_seq_num()}  ttl={self.ip.get_ttl()}"
+
 				chaine += "  | "
 
 			elif (self.transport != None and self.transport.get_typ()=="IGMP"):

@@ -40,7 +40,7 @@ class Icmp:
 			if (self.ip.get_proto2() == "TCP"):
 				self.transport = Tcp(self.ip.get_data())
 
-			if (self.ip.get_proto2() == "UDP"):
+			elif (self.ip.get_proto2() == "UDP"):
 				self.transport = Udp(self.ip.get_data())
 
 
@@ -59,7 +59,7 @@ class Icmp:
 
 	def determine_type(self):
 		if (self.typ_icmp == "08"):
-			self.typ_icmp2 = "Echo"
+			self.typ_icmp2 = "Echo Request"
 
 		elif (self.typ_icmp == "00"):
 			self.typ_icmp2 = "Echo Reply"
@@ -81,6 +81,9 @@ class Icmp:
 
 		elif (self.typ_icmp == "0B"):
 			self.typ_icmp2 = "Time Exceeded"
+
+		else:
+			self.typ_icmp2 = "Type Inconnue"
 
 
 
