@@ -60,10 +60,14 @@ Here is all of them:
 Then you have to give the type of operation you want: `==` or `<>` or `!=` (`<>` and `!=` are tha same)
 
 Then you would give the value that you are searching for.
-	-For ip addresses, you have to type them in this format: `192.168.0.0`
-	-For mac addresses, you have to type them in this format: `FF:FF:FF:FF:FF:FF`
-	-For port numbers, you have to type them in decimal like this: `80`
-	-For protocols, you can type their name like: `tcp` or their hexadecimal code like: `0x06`
-	
+	Value               | Format
+	-------------------- --------------------------------------
+	IP address          | 192.168.0.0
+	MAC address         | FF:FF:FF:FF:FF:FF
+	Port number         | decimal (ex: 80)
+	Protocol            | name(ex: TCP) or hex number(ex: 0x06)
+
 Here are the supported protocoles by our filters:
-		`IPv4`, `IPv6`, `ARP`, `ICMP`, `TCP`, `UDP`, `IGMP`, `EGP`, `IGP`, `XTP"`, "RSVP`,`HTTP`, `HTTPS`, "DNS`, `DHCP`, `SMTP`, `IMAP`, `POP`, `SSH`, `RDP`, `FTP`
+		`IPv4`, `IPv6`, `ARP`, `ICMP`, `TCP`, `UDP`, `IGMP`, `EGP`, `IGP`, `XTP`, `RSVP`,`HTTP`, `HTTPS`, "DNS`, `DHCP`, `SMTP`, `IMAP`, `POP`, `SSH`, `RDP`, `FTP`
+
+Finally you have to give your (j'ai pas de mots). You can use `&&` for an and (..) or you can use `||` for an or (..)
