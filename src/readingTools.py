@@ -1,6 +1,6 @@
 from tkinter import messagebox as mb
 
-def is_not_valid_extension(filename: str) -> bool:
+def is_not_valid_extension(filename):
     """str -> bool
     returns True if the file extension is supported
     """
@@ -11,7 +11,7 @@ def is_not_valid_extension(filename: str) -> bool:
 
 
 
-def read_trace_lines(filename: str) -> list[str]:
+def read_trace_lines(filename):
     """str -> list[str]
     returns every line of the file "filename"
     """
@@ -32,7 +32,7 @@ def read_trace_lines(filename: str) -> list[str]:
 
 
 
-def is_not_hex(str_to_check: str) -> bool:
+def is_not_hex(str_to_check):
     """str -> bool
     returns if the input character is hexadecimal
     """
@@ -47,7 +47,7 @@ def is_not_hex(str_to_check: str) -> bool:
 
 
 
-def get_invalid_format_frames(lines: list[str]) -> set[int]:
+def get_invalid_format_frames(lines):
     """list[str] -> set[int]
     returns the set of the indexes of the invalid frames
     """
@@ -150,7 +150,7 @@ def get_invalid_format_frames(lines: list[str]) -> set[int]:
 
 
 
-def delete_ascii_dump(lines: list[str]) -> list[str]:
+def delete_ascii_dump(lines):
     """list[str] -> list[str]
     returns the data without the possible ASCII dump
     """
@@ -201,7 +201,7 @@ def delete_ascii_dump(lines: list[str]) -> list[str]:
 
 
 
-def get_frames_list(frames_data: list[str]) -> list[str]:
+def get_frames_list(frames_data):
     """list[str] -> list[str]
     returns a list of the byte sequence of each frame
     """
@@ -231,7 +231,7 @@ def get_frames_list(frames_data: list[str]) -> list[str]:
 
 
 
-def delete_invalid_frames(invalid_frames_indexes: set[int], frames_list: list[str]) -> list[str]:
+def delete_invalid_frames(invalid_frames_indexes, frames_list):
     """set[int] x list[str] -> list[str]
     returns the frames list without the invalid frames according to the invalid frames' list of indexes
     """
@@ -249,7 +249,7 @@ def delete_invalid_frames(invalid_frames_indexes: set[int], frames_list: list[st
 
 
 
-def get_frames(filename: str) -> list[str]:
+def get_frames(filename):
     """str -> list[str]
     returns the frames' byte sequences of the file filename
     """
