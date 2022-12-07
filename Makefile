@@ -10,4 +10,3 @@ setup:
 
 clean:
 	- rm -rf src/__pycache__
-	- rmdir /s /q src/__pycache__
