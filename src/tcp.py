@@ -26,10 +26,10 @@ class Tcp:
 
 		# Options
 		self.opt_length = int(self.thl, 16)*8 - 40
-		self.opt = trame[40:40+opt_length]
+		self.opt = trame[40:40+self.opt_length]
 		
-		if (trame[40+opt_length:] != ""):
-			self.data = trame[40+opt_length:]
+		if (trame[40+self.opt_length:] != ""):
+			self.data = trame[40+self.opt_length:]
 		else:
 			self.data = None
 
@@ -67,6 +67,8 @@ class Tcp:
 
 		else:
 			self.appli = "Unknown"
+
+		self.options()
 
 	def options(self):
 		self.opt_det = []
@@ -273,7 +275,7 @@ class Tcp:
 
 	# String
 	def __str__(self):
-		chaine +=  f"{self.typ}:\n\tSource Port: {int(self.port_src, 16)}\
+		chaine =  f"{self.typ}:\n\tSource Port: {int(self.port_src, 16)}\
 		\n\tDestination Port: {int(self.port_dst, 16)}\
 		\n\tSequence Number: {int(self.seq_num, 16)}\
 		\n\tACK Number: {int(self.ack_num, 16)}\
