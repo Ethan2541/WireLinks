@@ -69,7 +69,7 @@ class Ip:
 		while (next_opt != self.opt_length):
 
 			if (self.opt[next_opt:next_opt+2] == "00"):
-				self.opt_det.append({"EEOL": self.opt[next_opt:]})
+				self.opt_det.append({"EOL": self.opt[next_opt:]})
 				next_opt = self.opt_length
 				nb_opt = nb_opt + 1
 

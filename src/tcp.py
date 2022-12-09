@@ -25,7 +25,7 @@ class Tcp:
 		self.up = trame[36:40]
 
 		# Options
-		opt_length = int(self.thl, 16)*8 - 40
+		self.opt_length = int(self.thl, 16)*8 - 40
 		self.opt = trame[40:40+opt_length]
 		
 		if (trame[40+opt_length:] != ""):
@@ -67,6 +67,147 @@ class Tcp:
 
 		else:
 			self.appli = "Unknown"
+
+	def options(self):
+		self.opt_det = []
+		len_opt = 0
+		next_opt = 0
+		nb_opt = 0
+
+		while (next_opt != self.opt_length):
+
+			if (self.opt[next_opt:next_opt+2] == "00"):
+				self.opt_det.append({"EOL": self.opt[next_opt:]})
+				next_opt = next_opt+2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "01"):
+
+				self.opt_det.append({"name": "NOP", "len":1})
+				next_opt = next_opt+2
+				nb_opt = nb_opt + 1
+
+			elif(self.opt[next_opt:next_opt+2] == "02"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "MSS", "len":len_opt})
+				self.opt_det[nb_opt]["mss"] = int(self.opt[next_opt+4:next_opt+8], 16)
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "03"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "WSpot", "len":len_opt})
+				self.opt_det[nb_opt]["window scale"] = self.opt[next_opt+4:next_opt+6]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "04"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "SACK Permitted", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "05"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "SACK", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["sack"] = self.opt[next_opt+4:next_opt+len_opt]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "06"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "Echo", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["info"] = self.opt[next_opt+4:next_opt+len_opt]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "07"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "Echo Reply", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["info"] = self.opt[next_opt+4:next_opt+len_opt]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "08"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "TS", "len":len_opt})
+				self.opt_det[nb_opt]["TS value"] = self.opt[next_opt+4:next_opt+12]
+				self.opt_det[nb_opt]["TS echo reply value"] = self.opt[next_opt+12:next_opt+20]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "09"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "Partial Order Connection Permitted", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "0A"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "POC service-profile", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["Start_Flag"] = self.opt[next_opt+4] and 0x8
+				self.opt_det[nb_opt]["End_Flag"] = self.opt[next_opt+4] and 0x4
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "0B"):
+				
+				self.opt_det.append({"CC": self.opt[next_opt:]})
+				next_opt = next_opt+2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "0C"):
+				
+				self.opt_det.append({"CC.NEW": self.opt[next_opt:]})
+				next_opt = next_opt+2
+				nb_opt = nb_opt + 1
+			
+			elif (self.opt[next_opt:next_opt+2] == "0D"):
+				
+				self.opt_det.append({"CC.ECHO": self.opt[next_opt:]})
+				next_opt = next_opt+2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "0E"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "TCP: Alternate Checksum Request", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["chk"] = self.opt[next_opt+4:next_opt+6]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			elif (self.opt[next_opt:next_opt+2] == "0F"):
+
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"name": "TCP: Alternate Checksum Data", "len":len_opt})
+				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det[nb_opt]["chk data"] = self.opt[next_opt+4:next_opt+len_opt]
+				next_opt = next_opt+len_opt*2
+				nb_opt = nb_opt + 1
+
+			else:
+				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
+				self.opt_det.append({"Autre": self.opt[next_opt:next_opt+len_opt*2]})
+				next_opt = next_opt+len_opt*2
+
+		self.nb_opt = nb_opt
+
 
 
 
