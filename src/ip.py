@@ -69,35 +69,43 @@ class Ip:
 		while (next_opt != self.opt_length):
 
 			if (self.opt[next_opt:next_opt+2] == "00"):
-				self.opt_det.append({"EOL": self.opt[next_opt:]})
+				self.opt_det.append({"Name": "End Of List (0x00)"})
 				next_opt = self.opt_length
+				nb_opt = nb_opt + 1
+
+
+			elif (self.opt[next_opt:next_opt+2] == "01"):
+
+				self.opt_det.append({"Name": "No-Operation (0x01)", "Len":1})
+				next_opt = next_opt+2
 				nb_opt = nb_opt + 1
 
 
 			elif(self.opt[next_opt:next_opt+2] == "07"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "RR", "Len":len_opt})
-				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["Ip"] = []
+				self.opt_det.append({"Name": "Record Route (0x07)", "Len":len_opt})
+				self.opt_det[nb_opt]["Pointer"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["IP"] = []
 
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["Ip"].append(self.opt[i: i+8])
+					ip_buffer = self.opt[i: i+8]
+					self.opt_det[nb_opt]["IP"].append(f"{int(ip_buffer[0:2], 16)}.{int(ip_buffer[2:4], 16)}.{int(ip_buffer[4:6], 16)}.{int(ip_buffer[6:8], 16)}")
 
-				next_opt = next_opt+len_opt*2
+				next_opt = next_opt + len_opt * 2
 				nb_opt = nb_opt + 1
 
 
 			elif (self.opt[next_opt:next_opt+2] == "44"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "TS", "Len":len_opt})
-				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det.append({"Name": "Timestamp (0x44)", "Len":len_opt})
+				self.opt_det[nb_opt]["Pointer"] = self.opt[next_opt+4:next_opt+6]
 				self.opt_det[nb_opt]["OF"] = str(int(self.opt[next_opt+6:next_opt+8], 16) & 0xF0)
 				self.opt_det[nb_opt]["FL"] = str(int(self.opt[next_opt+6:next_opt+8], 16) & 0x0F)
 				self.opt_det[nb_opt]["Time"] = []
 				
-				for i in range(next_opt+6, next_opt+len_opt, 8):
+				for i in range(next_opt + 6, next_opt + len_opt, 8):
 					self.opt_det[nb_opt]["Time"].append(self.opt[i: i+8])
 
 				next_opt = next_opt+len_opt*2
@@ -107,43 +115,38 @@ class Ip:
 			elif (self.opt[next_opt:next_opt+2] == "83"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "LSR", "Len":len_opt})
-				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["Ip"] = []
+				self.opt_det.append({"Name": "Loose Source Route (0x83)", "Len":len_opt})
+				self.opt_det[nb_opt]["Pointer"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["IP"] = []
 
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["Time"].append(self.opt[i: i+8])
+					ip_buffer = self.opt[i: i+8]
+					self.opt_det[nb_opt]["IP"].append(f"{int(ip_buffer[0:2], 16)}.{int(ip_buffer[2:4], 16)}.{int(ip_buffer[4:6], 16)}.{int(ip_buffer[6:8], 16)}")
 
-				next_opt = next_opt+len_opt*2
+				next_opt = next_opt + len_opt * 2
 				nb_opt = nb_opt + 1
 
 
 			elif (self.opt[next_opt:next_opt+2] == "89"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "SSR", "Len":len_opt})
+				self.opt_det.append({"Name": "Strict Source Route (0x89)", "Len":len_opt})
 				self.opt_det[nb_opt]["Len"] = len_opt
-				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["Ip"] = []
+				self.opt_det[nb_opt]["Pointer"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["IP"] = []
 				
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["Ip"].append(self.opt[i: i+8])
+					ip_buffer = self.opt[i: i+8]
+					self.opt_det[nb_opt]["IP"].append(f"{int(ip_buffer[0:2], 16)}.{int(ip_buffer[2:4], 16)}.{int(ip_buffer[4:6], 16)}.{int(ip_buffer[6:8], 16)}")
 
-				next_opt = next_opt+len_opt*2
-				nb_opt = nb_opt + 1
-
-
-			elif (self.opt[next_opt:next_opt+2] == "01"):
-
-				self.opt_det.append({"name": "NOP", "Len":1})
-				next_opt = next_opt+2
+				next_opt = next_opt + len_opt * 2
 				nb_opt = nb_opt + 1
 
 
 			else:
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"Autre": self.opt[next_opt:next_opt+len_opt*2]})
-				next_opt = next_opt+len_opt*2
+				self.opt_det.append({"Other": self.opt[next_opt:next_opt+len_opt*2]})
+				next_opt = next_opt + len_opt*2
 
 		self.nb_opt = nb_opt
 
@@ -221,10 +224,14 @@ class Ip:
 		\n\tTTL: {int(self.ttl, 16)}\
 		\n\tHeader Checksum: 0x{self.chk}\
 		\n\tNumber of Options: {self.nb_opt}"
-		if(self.nb_opt > 0):
-			chaine += f"\n\tOptions:"
+		
+		if (self.nb_opt > 0):
+			chaine += f"\n\tOptions:\n\t\t"
+
 			for i in range(len(self.opt_det)):
+
 				for key, value in self.opt_det[i].items():
-					chaine += f"\n\t{key} = {value}  "
+					chaine += f"{key} = {value}   "
+				chaine += "\n\t\t"
 
 		return chaine

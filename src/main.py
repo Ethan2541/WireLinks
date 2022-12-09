@@ -290,13 +290,8 @@ content_text = tk.Text(text_wrapper, bg = frame_color, fg = text_color, height =
 text_scrollbar = tk.Scrollbar(text_wrapper, orient = "vertical", width = 15)
 text_scrollbar.pack(side = "right", fill = "y")
 
-text_scrollbar_hor = tk.Scrollbar(text_wrapper, orient = "horizontal", width = 15)
-text_scrollbar_hor.pack(side = "bottom", fill = "x")
-
 content_text.config(yscrollcommand = text_scrollbar.set)
 text_scrollbar.config(command = content_text.yview)
-content_text.config(xscrollcommand = text_scrollbar_hor.set)
-text_scrollbar_hor.config(command = content_text.xview)
 
 content_text.pack(fill = tk.BOTH, side = "left", expand = tk.YES)
 content_text.config(state = "disabled")
