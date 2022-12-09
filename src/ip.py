@@ -224,7 +224,7 @@ class Ip:
 		if(self.nb_opt > 0):
 			chaine += f"\n\tOptions:"
 			for i in self.opt_det:
-				for key, value in self.opt_det[i].items:
+				for key, value in self.opt_det[i].items():
 					chaine += f"\n\t{key} = {value}"
 
 		return chaine

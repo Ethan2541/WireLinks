@@ -85,83 +85,83 @@ class Tcp:
 
 			elif (self.opt[next_opt:next_opt+2] == "01"):
 
-				self.opt_det.append({"name": "NOP", "len":1})
+				self.opt_det.append({"Name": "NOP", "Len":1})
 				next_opt = next_opt+2
 				nb_opt = nb_opt + 1
 
 			elif(self.opt[next_opt:next_opt+2] == "02"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "MSS", "len":len_opt})
-				self.opt_det[nb_opt]["mss"] = int(self.opt[next_opt+4:next_opt+8], 16)
+				self.opt_det.append({"Name": "MSS", "Len":len_opt})
+				self.opt_det[nb_opt]["MSS"] = int(self.opt[next_opt+4:next_opt+8], 16)
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "03"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "WSpot", "len":len_opt})
-				self.opt_det[nb_opt]["window scale"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det.append({"Name": "WSpot", "Len":len_opt})
+				self.opt_det[nb_opt]["Window Scale"] = self.opt[next_opt+4:next_opt+6]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "04"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "SACK Permitted", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det.append({"Name": "SACK Permitted", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "05"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "SACK", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["sack"] = self.opt[next_opt+4:next_opt+len_opt]
+				self.opt_det.append({"Name": "SACK", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["SACK"] = self.opt[next_opt+4:next_opt+len_opt]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "06"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "Echo", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["info"] = self.opt[next_opt+4:next_opt+len_opt]
+				self.opt_det.append({"Name": "Echo", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["Info"] = self.opt[next_opt+4:next_opt+len_opt]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "07"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "Echo Reply", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["info"] = self.opt[next_opt+4:next_opt+len_opt]
+				self.opt_det.append({"Name": "Echo Reply", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["Info"] = self.opt[next_opt+4:next_opt+len_opt]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "08"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "TS", "len":len_opt})
-				self.opt_det[nb_opt]["TS value"] = self.opt[next_opt+4:next_opt+12]
-				self.opt_det[nb_opt]["TS echo reply value"] = self.opt[next_opt+12:next_opt+20]
+				self.opt_det.append({"Name": "TS", "len":len_opt})
+				self.opt_det[nb_opt]["TS Value"] = self.opt[next_opt+4:next_opt+12]
+				self.opt_det[nb_opt]["TS Echo Reply Value"] = self.opt[next_opt+12:next_opt+20]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "09"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "Partial Order Connection Permitted", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det.append({"Name": "Partial Order Connection Permitted", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "0A"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "POC service-profile", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
+				self.opt_det.append({"Name": "POC service-profile", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
 				self.opt_det[nb_opt]["Start_Flag"] = self.opt[next_opt+4] and 0x8
 				self.opt_det[nb_opt]["End_Flag"] = self.opt[next_opt+4] and 0x4
 				next_opt = next_opt+len_opt*2
@@ -188,24 +188,24 @@ class Tcp:
 			elif (self.opt[next_opt:next_opt+2] == "0E"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "TCP: Alternate Checksum Request", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["chk"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det.append({"Name": "TCP: Alternate Checksum Request", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["CHK"] = self.opt[next_opt+4:next_opt+6]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			elif (self.opt[next_opt:next_opt+2] == "0F"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "TCP: Alternate Checksum Data", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["chk data"] = self.opt[next_opt+4:next_opt+len_opt]
+				self.opt_det.append({"Name": "TCP: Alternate Checksum Data", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["CHK Data"] = self.opt[next_opt+4:next_opt+len_opt]
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
 
 			else:
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"Autre": self.opt[next_opt:next_opt+len_opt*2]})
+				self.opt_det.append({"Other": self.opt[next_opt:next_opt+len_opt*2]})
 				next_opt = next_opt+len_opt*2
 
 		self.nb_opt = nb_opt
@@ -291,10 +291,13 @@ class Tcp:
 		\n\tChecksum: 0x{self.chk}\
 		\n\tUrgent pointer: {int(self.up, 16)}\
 		\n\tApplication: {self.appli}"
-		if(self.nb_opt > 0):
-			chaine += f"\n\tOptions:"
-			for i in self.opt_det:
+		
+		if (self.nb_opt > 0):
+			chaine += f"\n\tOptions:\n\t\t"
+
+			for i in range(len(self.opt_det)):
 				for key, value in self.opt_det[i].items():
-					chaine += f"\n\t{key} = {value}"
+					chaine += f"{key} = {value}   "
+				chaine += "\n\t\t"
 
 		return chaine
