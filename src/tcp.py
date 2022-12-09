@@ -143,7 +143,7 @@ class Tcp:
 			elif (self.opt[next_opt:next_opt+2] == "08"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"Name": "TS", "len":len_opt})
+				self.opt_det.append({"Name": "TS", "Len":len_opt})
 				self.opt_det[nb_opt]["TS Value"] = self.opt[next_opt+4:next_opt+12]
 				self.opt_det[nb_opt]["TS Echo Reply Value"] = self.opt[next_opt+12:next_opt+20]
 				next_opt = next_opt+len_opt*2
@@ -160,7 +160,7 @@ class Tcp:
 			elif (self.opt[next_opt:next_opt+2] == "0A"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"Name": "POC service-profile", "Len":len_opt})
+				self.opt_det.append({"Name": "POC Service-Profile", "Len":len_opt})
 				self.opt_det[nb_opt]["Len"] = len_opt
 				self.opt_det[nb_opt]["Start_Flag"] = self.opt[next_opt+4] and 0x8
 				self.opt_det[nb_opt]["End_Flag"] = self.opt[next_opt+4] and 0x4

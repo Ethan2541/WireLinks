@@ -77,12 +77,12 @@ class Ip:
 			elif(self.opt[next_opt:next_opt+2] == "07"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "RR", "len":len_opt})
-				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["ip"] = []
+				self.opt_det.append({"name": "RR", "Len":len_opt})
+				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["Ip"] = []
 
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["ip"].append(self.opt[i: i+8])
+					self.opt_det[nb_opt]["Ip"].append(self.opt[i: i+8])
 
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
@@ -91,14 +91,14 @@ class Ip:
 			elif (self.opt[next_opt:next_opt+2] == "44"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "TS", "len":len_opt})
-				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det.append({"name": "TS", "Len":len_opt})
+				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
 				self.opt_det[nb_opt]["OF"] = str(int(self.opt[next_opt+6:next_opt+8], 16) & 0xF0)
 				self.opt_det[nb_opt]["FL"] = str(int(self.opt[next_opt+6:next_opt+8], 16) & 0x0F)
-				self.opt_det[nb_opt]["time"] = []
+				self.opt_det[nb_opt]["Time"] = []
 				
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["time"].append(self.opt[i: i+8])
+					self.opt_det[nb_opt]["Time"].append(self.opt[i: i+8])
 
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
@@ -107,12 +107,12 @@ class Ip:
 			elif (self.opt[next_opt:next_opt+2] == "83"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "LSR", "len":len_opt})
-				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["ip"] = []
+				self.opt_det.append({"name": "LSR", "Len":len_opt})
+				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["Ip"] = []
 
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["time"].append(self.opt[i: i+8])
+					self.opt_det[nb_opt]["Time"].append(self.opt[i: i+8])
 
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
@@ -121,13 +121,13 @@ class Ip:
 			elif (self.opt[next_opt:next_opt+2] == "89"):
 
 				len_opt = int(self.opt[next_opt+2:next_opt+4], 16)
-				self.opt_det.append({"name": "SSR", "len":len_opt})
-				self.opt_det[nb_opt]["len"] = len_opt
-				self.opt_det[nb_opt]["ptr"] = self.opt[next_opt+4:next_opt+6]
-				self.opt_det[nb_opt]["ip"] = []
+				self.opt_det.append({"name": "SSR", "Len":len_opt})
+				self.opt_det[nb_opt]["Len"] = len_opt
+				self.opt_det[nb_opt]["Ptr"] = self.opt[next_opt+4:next_opt+6]
+				self.opt_det[nb_opt]["Ip"] = []
 				
 				for i in range(next_opt+6, next_opt+len_opt, 8):
-					self.opt_det[nb_opt]["ip"].append(self.opt[i: i+8])
+					self.opt_det[nb_opt]["Ip"].append(self.opt[i: i+8])
 
 				next_opt = next_opt+len_opt*2
 				nb_opt = nb_opt + 1
@@ -135,7 +135,7 @@ class Ip:
 
 			elif (self.opt[next_opt:next_opt+2] == "01"):
 
-				self.opt_det.append({"name": "NOP", "len":1})
+				self.opt_det.append({"name": "NOP", "Len":1})
 				next_opt = next_opt+2
 				nb_opt = nb_opt + 1
 
@@ -223,8 +223,8 @@ class Ip:
 		\n\tNumber of Options: {self.nb_opt}"
 		if(self.nb_opt > 0):
 			chaine += f"\n\tOptions:"
-			for i in self.opt_det:
+			for i in range(len(self.opt_det)):
 				for key, value in self.opt_det[i].items():
-					chaine += f"\n\t{key} = {value}"
+					chaine += f"\n\t{key} = {value}  "
 
 		return chaine
