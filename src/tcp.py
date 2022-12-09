@@ -293,11 +293,11 @@ class Tcp:
 		\n\tApplication: {self.appli}"
 		
 		if (self.nb_opt > 0):
-			chaine += f"\n\tOptions:\n\t\t"
+			chaine += f"\n\tOptions:\n\t     "
 
 			for i in range(len(self.opt_det)):
 				for key, value in self.opt_det[i].items():
 					chaine += f"{key} = {value}   "
-				chaine += "\n\t\t"
+				chaine += "\n\t     "
 
 		return chaine
