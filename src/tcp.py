@@ -273,7 +273,7 @@ class Tcp:
 
 	# String
 	def __str__(self):
-		return f"{self.typ}:\n\tSource Port: {int(self.port_src, 16)}\
+		chaine +=  f"{self.typ}:\n\tSource Port: {int(self.port_src, 16)}\
 		\n\tDestination Port: {int(self.port_dst, 16)}\
 		\n\tSequence Number: {int(self.seq_num, 16)}\
 		\n\tACK Number: {int(self.ack_num, 16)}\
@@ -289,3 +289,10 @@ class Tcp:
 		\n\tChecksum: 0x{self.chk}\
 		\n\tUrgent pointer: {int(self.up, 16)}\
 		\n\tApplication: {self.appli}"
+		if(self.nb_opt > 0):
+			chaine += f"\n\tOptions:"
+			for i in self.opt_det:
+				for key, value in self.opt_det[i]:
+					chaine += f"\n\t{key} = {value}"
+
+		return chaine

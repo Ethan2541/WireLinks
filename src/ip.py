@@ -208,7 +208,7 @@ class Ip:
 
 	# String
 	def __str__(self):
-		return f"IPv{self.version}:\
+		chaine = f"IPv{self.version}:\
 		\n\tSource Address: {self.src}\
 		\n\tDestination Address: {self.dst}\
 		\n\tProtocol: {self.proto2} ({int(self.proto, 16)})\
@@ -220,5 +220,11 @@ class Ip:
 		\n\tFragment Offset: 0x{self.fragoff}\
 		\n\tTTL: {int(self.ttl, 16)}\
 		\n\tHeader Checksum: 0x{self.chk}\
-		\n\tNumber of Options: {self.nb_opt}\
-		\n\tOptions List: {self.opt_det}"
+		\n\tNumber of Options: {self.nb_opt}"
+		if(self.nb_opt > 0):
+			chaine += f"\n\tOptions:"
+			for i in self.opt_det:
+				for key, value in self.opt_det[i]:
+					chaine += f"\n\t{key} = {value}"
+
+		return chaine
