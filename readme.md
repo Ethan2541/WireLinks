@@ -1,3 +1,18 @@
+WIRELINKS
+-
+
+Goal
+---
+
+WireLinks is a network traffic visualizer which is greatly inspired by WireShark. We created WireLinks as part of an end-of-term assignment for the `LU3IN033 - Computer Networking` course at _Sorbonne Université_.
+
+
+How to run WireLinks ?
+---
+
+In order to run our program, you simply need to execute the file `main.py` with your Python interpreter.
+
+
 Reading and Writing Tools
 ---
 
